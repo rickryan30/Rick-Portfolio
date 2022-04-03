@@ -1,37 +1,86 @@
-<div class="header">
-  <div class="logo">
-    <img src="https://res.cloudinary.com/dzkoxrsdj/image/upload/v1646339469/angular_wzrs5o.png">
-  </div>
-</div>
-<div class="resource-list">
-  <h2>
-      Here are some resources to help you on your Angular + Netlify journey:
-  </h2>
-  <ul>
-    <li>
-      <a href="https://github.com/netlify-templates/angular-quickstart">The Angular Quickstart repo</a>
-    </li>
-    <li>
-      <a href="https://www.netlify.com/tags/angular/">Netlify Blog: Angular posts</a>
-    <li>
-      <a href="https://docs.netlify.com/">Netlify Docs</a>
-    </li>
-    <li>
-      <a href="https://angular.io/">Angular Docs</a>
-    </li>
-  </ul>
+<div class="header-banner">  
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 d-lg-none">
+                <div class="header-name">
+                    <h1>Rick Ryan Medillo</h1>
+                </div>
+            </div>
+        </div>
+        
+        <div class="logo-menu">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-4">
+                    <div class="wrapper">
+                        <div class="fr1"><a onClick="window.toggle();"><img src="assets/image/hamburger_button.png" class="img-fluid"></a>
+                        <div class="pos"></div>
+                        </div>
+                        <div class="toggledAnother" style="display: block;">
+                        <ul class="horizontalMenu3">
+                            <li><a href="about-me">About Me</a></li>
+                            <li><a href="gallery">Gallery</a></li>
+                            <li><a href="works">Works</a></li>
+                            <li><a href="testimonials">Testimonials</a></li>
+                            <li><a href="contact">Contact</a></li>
+                        </ul>
+                        </div>
+                </div>  
+                </div>
+            </div><!-- end row-->	
+        </div><!-- end logo-menu-->
+    </div><!-- end container-->	 
+</div><!-- end header-banner-->	
 
-  <button type="button" class="btn btn-primary">Primary</button>
-<button type="button" class="btn btn-secondary">Secondary</button>
-<button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-danger">Danger</button>
-<button type="button" class="btn btn-warning">Warning</button>
-<button type="button" class="btn btn-info">Info</button>
-<button type="button" class="btn btn-light">Light</button>
-<button type="button" class="btn btn-dark">Dark</button>
+<div class="container">
+    <div class="column">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+            <app-sidebar></app-sidebar>
+            </div>
+            <div class="col-md-12 col-lg-8">
+                <div class="name-position">
+                    <div class="col-md-12 col-lg-6">
+                        <div class="row">
+                        <p>
+                        Web Designer, Front-End and Back-End <br>Developer. I Design and Build Websites from Scratch.
+                        </p>
+                        </div>
+                        <div class="row">
+                            <div class="dl-button">
+                                <div class="download-resume">
+                                <a href=""><fa-icon [icon]="faDownload"></fa-icon>&nbsp;&nbsp;&nbsp;DOWNLOAD RESUME</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col-md-6-->
+                </div><!-- end name-position-->
+                <router-outlet></router-outlet>
+            </div>
+        </div><!-- end row-->
+    </div><!-- end column-->	
+</div><!-- end container-->	
 
-<button type="button" class="btn btn-link">Link</button>
-</div>
-<footer class="footer">
-  Made with <a href="https://netlify.com"><img src="https://res.cloudinary.com/dzkoxrsdj/image/upload/v1646714899/netliheart_ezlkim.svg" alt="Netlify Logo" /></a> for you!
-</footer>
+<div class="footer-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-8">
+                <div class="left-footer">
+                    Copyright &copy; {{ currentYear }} <span>Rick Ryan Medillo.</span> All Rights Reserved.
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="right-footer text-center">
+                    <h5>CONTACT INFO</h5>
+                    <p><fa-icon [icon]="faEnvelope"></fa-icon> Email: rickryan29.rr@gmail.com</p>
+                    <p><fa-icon [icon]="faMobile"></fa-icon> Mobile: +639611335934 / +639260019250</p>
+                    <p>
+                        Follow me on:&nbsp; 
+                        <a href="https://www.facebook.com/mudp0et" target="_blank"><fa-icon [icon]="faFacebook"></fa-icon></a>&nbsp;&nbsp;
+                        <a href="https://www.linkedin.com/in/rick-ryan-medillo-7821371a1/" target="_blank"><fa-icon [icon]="faLinkedin"></fa-icon></a>
+                    </p>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div> 
