@@ -61,7 +61,7 @@ export class AboutComponent implements OnInit {
       }, error: err => {
         console.error(err);
         this.addVisitors();
-        this.refreshPage();
+//         this.refreshPage();
       },
     });
   }
