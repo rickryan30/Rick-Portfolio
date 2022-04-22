@@ -1,1 +1,97 @@
-<p>work works!</p>
+<div class="content-right-box override-content">
+    <nav class="nav nav-pills flex-column flex-sm-row">
+        <a class="flex-sm-fill text-sm-center nav-link active" id="template-tab" data-toggle="tab" href="#template" role="tab" aria-controls="template" aria-selected="true">Templates</a>
+        <a class="flex-sm-fill text-sm-center nav-link" id="project-tab" data-toggle="tab" href="#project" role="tab" aria-controls="project" aria-selected="false">Projects</a>
+    </nav>
+</div>
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="template" role="tabpanel" aria-labelledby="template-tab">
+        <!-- templates -->
+        <div class="content-right-box content-right-separate">
+            <div class="header-title">
+                <fa-icon [icon]="faMarker"></fa-icon> Templates
+            </div><!-- end header-title-->
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="Gallery">
+                        <div class="gallery-item" *ngFor="let template of templates | paginate
+                        : {
+                            id: 'templatePagination',
+                            itemsPerPage: tempTableSize,
+                            currentPage: tempPage,
+                            totalItems: tempCount
+                          };
+                        let m = index">
+                        <a href="{{template.link}}"><img src="{{template.image}}" alt="{{template.alt}}"/></a>
+                        </div>
+                    </div><!--end #Gallery-->
+                </div>
+            </div> 
+            <div class="d-flex justify-content-center pagi-numbers mt-4">
+                <pagination-controls
+                id="templatePagination"
+                previousLabel="Prev"
+                nextLabel="Next"
+                (pageChange)="onTableDataChangeTemp($event)"
+                >
+            </pagination-controls>
+        </div>
+        </div><!-- end content-right-box-->	
+    </div><!-- first tab -->
+
+    <div class="tab-pane fade" id="project" role="tabpanel" aria-labelledby="project-tab">
+        <!-- projects -->
+            <div class="content-right-box content-right-separate">
+                <div class="header-title">
+                    <fa-icon [icon]="faLaptop"></fa-icon> Projects
+                </div><!-- end header-title-->
+
+                <div class="projects-content">
+                    <div class="row testi-section">
+                        <div class="col-md-12">
+                        
+                            <div class="proj-cont-box left-proj-content" *ngFor="let project of projects | paginate
+                            : {
+                                id: 'projectPagination',
+                                itemsPerPage: tableSize,
+                                currentPage: page,
+                                totalItems: count
+                              };
+                            let i = index">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4 col-lg-4">
+                                        <div class="proj-img">
+                                            <img src="{{ project.image }}" class="img-fluid" alt="Rick Ryan Medillo scc opac" alt="{{project.name}}" />
+                                        </div><!-- end proj-img-->
+                                    </div><!-- end col-md-4-->
+                                    <div class="col-sm-12 col-md-8 col-lg-8">
+                                        <h3 class="sccopac">{{project.title}}</h3>
+                                        <!-- <h3 class="sccopac">Online Public <br/> Access Catalog</h3> -->
+                                        <div class="scc-title">{{project.name}}</div>
+                                        <a href="{{project.link}}" target="_blank">
+                                            <button class="btn btn-default btn-md btn-view-project" name="btn-view" role="button" >
+                                            <i class="fas fa-eye"></i> View Project
+                                            </button>
+                                        </a>
+                                    </div><!-- end col-md-8-->
+                                </div><!-- end row-->
+                            </div><!-- end proj-cont-box left-proj-content-->
+
+                        </div><!-- end col-md-12-->	
+                    </div><!-- end row-->
+
+                    <div class="d-flex justify-content-center pagi-numbers mt-4">
+                        <pagination-controls
+                         id="projectPagination"
+                          previousLabel="Prev"
+                          nextLabel="Next"
+                          (pageChange)="onTableDataChange($event)"
+                        >
+                    </pagination-controls>
+                    </div>
+                </div><!-- end projects-content -->	
+            </div><!-- end content-right-box-->
+    </div><!-- second tab -->
+</div>

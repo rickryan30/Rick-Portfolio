@@ -28,11 +28,15 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/sweetalert2/src/sweetalert2.scss",
               "src/styles.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/js/simple-inheritance.min.js",
+              "src/assets/js/code-photoswipe-1.0.11.min.js",
+              "src/assets/js/custom.js"
             ]
           },
           "configurations": {

@@ -1,0 +1,4 @@
+button.btn.btn-default.btn-md.btn-like:hover:disabled {
+    border: 2px solid #eae3d8;
+    color: #eae3d8;
+}

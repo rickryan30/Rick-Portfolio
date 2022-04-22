@@ -11,6 +11,7 @@ import { faMobile } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'Rick Ryan Medillo';
   
   faDownload = faDownload;

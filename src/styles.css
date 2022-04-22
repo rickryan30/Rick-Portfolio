@@ -134,10 +134,13 @@ ul.horizontalMenu3 li a {
   font-weight: 600;
 }
 ul.horizontalMenu3 li a:hover {
-  color: #ffffff;
+  color: #eae3d8;
 }
 /* end banner */
 
+.content-right-box.override-content a:hover {
+  color: #f2aa4c;
+}
 /* left profile */
 .column {
     margin-top: -275px;
@@ -149,6 +152,7 @@ ul.horizontalMenu3 li a:hover {
     min-height: 840px;
     margin-top: -195px;
     filter: drop-shadow(3px 2px 3px #00080e);
+    border-bottom: 5px solid #f2aa4c;
 }
 
 div.content-box {
@@ -329,11 +333,15 @@ div#post_button .modal-footer {
 .reply-modal .modal-header .modal-title {
   color: #373e44;
   font-weight: 700;
-  text-transform: uppercase;
 }
 
-h4.testi-title {
+/* h5.testi-title {
     color: #eba64b;
+} */
+
+h5.modal-title.override-modal-title span {
+  text-transform: uppercase;
+  color: #f2aa4c;
 }
 
 .input-group-prepend.override-input-prepend {
@@ -369,6 +377,17 @@ button.btn.btn-primary.btn-post-override {
   color: #373e44;
   text-transform: uppercase;
   font-weight: 700;
+  filter: drop-shadow(3px 2px 3px #00080e);
+}
+
+button.btn.btn-primary.btn-post-override:hover {
+  background-color: #f2aa4c;
+  border-color: #f2aa4c;
+  color: white;
+}
+
+button.btn.btn-primary.btn-post-override:focus {
+  box-shadow: none;
 }
 
 button.btn.btn-danger.btn-reply-override {
@@ -377,6 +396,17 @@ button.btn.btn-danger.btn-reply-override {
   color: #373e44;
   text-transform: uppercase;
   font-weight: 700;
+  filter: drop-shadow(3px 2px 3px #00080e);
+}
+
+button.btn.btn-danger.btn-reply-override:hover {
+  background-color: #373e44;
+  border-color: #373e44;
+  color: white;
+}
+
+button.btn.btn-danger.btn-reply-override:focus {
+  box-shadow: none;
 }
 
 /* sub header */
@@ -446,12 +476,175 @@ button.btn.btn-danger.btn-reply-override {
 /* end of footer*/
 
 /* testimonials */
+
+.input-group-prepend.override-input-prepend fa-icon.fuser {
+    padding: 7px 0;
+}
+
+.input-group-prepend.override-input-prepend fa-icon.fcomment {
+    padding: 30px 0;
+}
+
+.card.mb-3.override-card {
+  color: #373e44;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.card.mb-3.override-card .card-body {
+  padding: 10px 20px;
+}
+
+.card.mb-3.override-card .card-header {
+  background-color: #eae3d8;
+  font-weight: 700;
+}
+
+.card.mb-3.override-card .card-footer {
+  background-color: #eae3d8;
+  font-weight: 700;
+}
+
+.card.reply-card {
+  color: #373e44;
+  font-size: 14px;
+  border: none;
+  width: 100%;
+}
+
+.card.reply-card .card-body {
+  padding: 10px 20px;
+}
+
+.card.reply-card .card-header {
+  background-color: #9fa4a8;
+  font-weight: 700;
+  padding: 10px 20px;
+  color: #000000;;
+}
+
+.card.reply-card .card-footer {
+  background-color: #9fa4a8;
+  font-weight: 700;
+  padding: 0 20px;
+  color: #000000;;
+}
+
+.card.reply-card .card-header fa-icon {
+  padding: 3px 6px;
+  background-color: #373e44;
+  color: #eae3d8;
+  border-radius: 4px;
+}
+
+.card.reply-card .card-footer fa-icon {
+  padding: 3px 6px;
+  background-color: #373e44;
+  color: #eae3d8;
+  border-radius: 4px;
+}
+
+select.custom-select.select-pagi {
+  border: 0;
+  cursor: pointer;
+  background-color: #eae3d8;
+  color: #373e44;
+  font-weight: 600;
+}
+
+.pagi-numbers li {
+  background-color: #4b555e;
+  margin-right: 0px !important;
+  border-right: 1px solid #fff;
+}
+
+.pagi-numbers li a {
+  color: #eae3d8;
+}
+
+.pagi-numbers li a:hover {
+  color: #6c757d;
+  text-decoration: none;
+  background-color: #fff;
+}
+
+.pagi-numbers li a[aria-label="Next page"] {
+  color: #6c757d;
+}
+
+.pagi-numbers li a[aria-label="Prev page"] {
+  color: #6c757d;
+}
+
+.pagi-numbers li a[aria-label="Next page"]:hover {
+  text-decoration: none;
+  background-color: #fff;
+}
+
+.pagi-numbers li.pagination-next.disabled {
+  color: #6c757d;
+  background-color: #eae3d8;
+  margin-right: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-weight: 500;
+}
+
+.pagi-numbers li.pagination-previous.disabled {
+  color: #6c757d;
+  background-color: #eae3d8;
+  margin-right: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  font-weight: 500;
+}
+
+.pagi-numbers li.pagination-previous {
+  color: #6c757d;
+  background-color: #eae3d8;
+  margin-right: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  font-weight: 500;
+}
+
+.pagi-numbers li.pagination-next {
+  color: #6c757d;
+  background-color: #eae3d8;
+  margin-left: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-weight: 500;
+}
+
+.pagi-numbers li.current {
+  background: #f2aa4c;
+}
+
 .col-md-12.post-name {
     font-weight: 600;
     font-size: 14px;
     margin-bottom: 10px;
     /*text-transform: uppercase;
     color: #eba64b;*/
+}
+
+.float-left.country-override {
+  padding: 8px 0;
+}
+
+.card.border-info.mb-3.override-card .card-header fa-icon {
+  padding: 3px 6px;
+  background-color: #373e44;
+  color: #eae3d8;
+  border-radius: 4px;
+}
+
+.card.border-info.mb-3.override-card .card-footer .footerIcon {
+  padding: 3px 6px;
+  background-color: #373e44;
+  color: #eae3d8;
+  border-radius: 4px;
 }
 
 .col-md-12.post-name span {
@@ -627,7 +820,7 @@ img[src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost
 /* home-page */
 .header-title fa-icon {
   background-color: #f2aa4c;
-  padding: 2px 7px;
+  padding: 3px 7px;
   color: #373e44;
   margin-right: 6px;
   font-weight: 600;
@@ -644,6 +837,7 @@ img[src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost
   display: inline-block;
   padding-right: 15px;
   margin-top: -3px;
+  filter: drop-shadow(3px 2px 3px #00080e);
 }
 
 ul.p-info {
@@ -829,7 +1023,7 @@ span.badge.badge-circle.background--danger.mr-4 {
 }
 .title {
   color: #222;
-  fot-size: 20px;
+  font-size: 20px;
   text-align: center;
 }
 .inner-image {
@@ -920,7 +1114,7 @@ span.close-btn {
   color: #373e44;
   padding: 8px 8px;
   height: 268px;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 .projects-content {
@@ -1044,7 +1238,13 @@ button#send_email {
   background-color: #f2aa4c;
   border-color: #f2aa4c;
   color: #373e44;
-  font-weight: 600;
+  filter: drop-shadow(3px 2px 3px #00080e);
+  font-weight: 700;
+}
+
+button#send_email:hover {
+  background-color: #eae3d8;
+  border-color: #eae3d8;
 }
 /* end of contact page */
 
