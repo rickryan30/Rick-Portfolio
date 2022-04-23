@@ -136,8 +136,8 @@ get rF(){
       name: this.form.value.name,
       testimonials: this.form.value.testimonials,
       country: this.visitorCountry,
-      postedon: currentDateTime,
-      key:'P@ssw0rd'
+      postedon: currentDateTime
+//       key:'P@ssw0rd'
     };
 
     this.testimonialsService.addTesti(data)
