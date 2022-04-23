@@ -10,7 +10,7 @@ import { Replies } from '../models/replies.model';
 })
 export class RepliesService {
 
-  REST_API: string = 'https://medillorickryan.000webhostapp.com/api/testimonial-replies';
+  REST_API: string = 'https://kcirnayr.000webhostapp.com/api/testimonial-replies';
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 

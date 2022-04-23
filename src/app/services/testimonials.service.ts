@@ -10,20 +10,21 @@ import { Testimonials } from '../models/testimonials.model';
 })
 export class TestimonialsService {
 
-  REST_API: string = 'https://medillorickryan.000webhostapp.com/api/testimonials';
+  REST_API: string = 'https://kcirnayr.000webhostapp.com/api';
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-
+  httpOptions = new HttpHeaders().set('Accept', 'application/json');
+  
   constructor(private httpClient: HttpClient) { }
 
   //get all
   geTesti() {
-    return this.httpClient.get(`${this.REST_API}` + `/get.php`);
+    return this.httpClient.get(`${this.REST_API}` + `/testimonials/get.php`);
   }
-  
+   
   // Get single 
   getTestId(id:any): Observable<any> {
-    let API_URL = `${this.REST_API}/get.php?id=${id}`;
+    let API_URL = `${this.REST_API}/testimonials/get.php?id=${id}`;
     return this.httpClient.get(API_URL, { headers: this.httpHeaders})
       .pipe(map((res: any) => {
           return res || {}
@@ -35,8 +36,8 @@ export class TestimonialsService {
 
   // Add
   addTesti(data: Testimonials): Observable<any> {
-    let API_URL = `${this.REST_API}/insert_testimonial.php`;
-    return this.httpClient.post<Testimonials>(API_URL, data)
+    let API_URL = `${this.REST_API}/testimonials/insert_testimonial.php`;
+    return this.httpClient.post(API_URL, data)
       .pipe(
         catchError(this.errorHandler)
       )

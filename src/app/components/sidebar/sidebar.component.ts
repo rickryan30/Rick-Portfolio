@@ -2,12 +2,9 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faComments } from '@fortawesome/free-regular-svg-icons';
-import { HttpClient } from '@angular/common/http';
 import { Likes } from 'src/app/models/likes.model';
 import { LikesService } from 'src/app/services/likes.service';
-import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { Visitors } from 'src/app/models/visitors.model';
 import { VisitorsService } from 'src/app/services/visitors.service';
 import { TestimonialsService } from 'src/app/services/testimonials.service';
 import Swal from 'sweetalert2';
@@ -41,11 +38,8 @@ export class SidebarComponent implements OnInit {
   getTestiCount:any = [];
  
   constructor(
-  private http: HttpClient,
   public likeService: LikesService,
   public testimonialsService: TestimonialsService,
-  private router: Router,
-  private ngZone: NgZone,
   public datepipe: DatePipe,
   public visitorService: VisitorsService
   ) { }
@@ -65,7 +59,7 @@ export class SidebarComponent implements OnInit {
         if (this.getlike.status === 'success') {
           this.visitorIP = this.getlike.data[0].user_ip;
         }
-      }, error: err => console.error(err)
+      }, error: err => console.error(err) 
     });
     
     // fetch all likes and count

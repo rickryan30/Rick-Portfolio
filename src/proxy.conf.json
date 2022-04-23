@@ -1,0 +1,6 @@
+{
+    "/api": {
+      "target": "https://kcirnayr.000webhostapp.com/api/",
+      "secure": false
+    }
+  }

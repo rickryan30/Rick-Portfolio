@@ -10,7 +10,7 @@ import { Likes } from '../models/likes.model';
 })
 export class LikesService {
   
-  REST_API: string = 'https://medillorickryan.000webhostapp.com/api/likes';
+  REST_API: string = 'https://kcirnayr.000webhostapp.com/api/likes';
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 

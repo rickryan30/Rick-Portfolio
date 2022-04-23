@@ -10,7 +10,7 @@ import { Visitors } from '../models/visitors.model';
 })
 export class VisitorsService {
 
-  REST_API: string = 'https://medillorickryan.000webhostapp.com/api/visitors';
+  REST_API: string = 'https://kcirnayr.000webhostapp.com/api/visitors';
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 

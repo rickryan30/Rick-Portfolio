@@ -164,8 +164,8 @@ get rF(){
       name: this.replyForm.value.name,
       reply: this.replyForm.value.reply,
       country: this.visitorCountry,
-      postedon: currentDateTime,
-      key:'P@ssw0rd'
+      postedon: currentDateTime
+      // key:'P@ssw0rd'
     };
 
     this.repliesService.addReplies(data)
