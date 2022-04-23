@@ -130,7 +130,7 @@ get rF(){
   return this.replyForm.controls;
 }
 
-  addTesti(): any {
+  addTesti(): void {
     let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     let data = {
       name: this.form.value.name,
@@ -141,22 +141,30 @@ get rF(){
     };
 
     this.testimonialsService.addTesti(data)
-    .subscribe((res:any) => {
-      if (res.status === 'success') {
-        Swal.fire({
-          title: 'Thank You!',
-          text: 'Testimonial has been posted.',
-          icon: 'success',
-        }).then(() => {
-          this.refreshPage();
-        });
-      }
-    }, (err) => {
-        console.log(err);
-    });
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (e) => console.error(e)
+      });
+
+    // this.testimonialsService.addTesti(data)
+    // .subscribe((res:any) => {
+    //   if (res.status === 'success') {
+    //     Swal.fire({
+    //       title: 'Thank You!',
+    //       text: 'Testimonial has been posted.',
+    //       icon: 'success',
+    //     }).then(() => {
+    //       this.refreshPage();
+    //     });
+    //   }
+    // }, (err) => {
+    //     console.log(err);
+    // });
   }
 
-  addReplies(): any {
+  addReplies() {
     // console.log(this.tIdValue);
     let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     let data = {

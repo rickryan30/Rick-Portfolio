@@ -35,9 +35,9 @@ export class TestimonialsService {
  
 
   // Add
-  addTesti(data: Testimonials): Observable<any> {
+  addTesti(data: Testimonials): Observable<Testimonials> {
     let API_URL = `${this.REST_API}/testimonials/insert_testimonial.php`;
-    return this.httpClient.post(API_URL, data)
+    return this.httpClient.post<Testimonials>(API_URL, data, { headers: this.httpHeaders})
       .pipe(
         catchError(this.errorHandler)
       )

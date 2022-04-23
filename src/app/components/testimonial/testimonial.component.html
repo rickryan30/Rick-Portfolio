@@ -158,7 +158,7 @@
       </div>
     <!-- Testimonial Modal -->
     
-    <form [formGroup]="form" (ngSubmit)="addTesti()">
+    
     <div class="modal fade testi-modal" id="post_button" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -168,7 +168,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div><!-- End Modal Header -->
-          
+          <form [formGroup]="form" (ngSubmit)="addTesti()">
           <div class="modal-body">
             <div class="col-md-12">
                 <div class="input-group mb-3">
@@ -216,13 +216,13 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><fa-icon [icon]="faTimesCircle"></fa-icon> Close</button>
                 <button class="btn btn-primary savebtn" role="button" type="submit" [disabled]="!form.valid"><fa-icon [icon]="faCommentDots"></fa-icon> Post</button>
               </div><!-- End Modal Footer -->
-
+            </form>
           
         </div><!-- End Modal Content -->
       </div>
     </div><!-- End Testimonial Modal -->
 
-</form>
+
     
 
 
