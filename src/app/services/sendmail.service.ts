@@ -10,8 +10,8 @@ import { Sendmail } from '../models/sendmail.model';
 })
 export class SendmailService {
 
-  // private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/api/sendmail.php";
-  private apiURL = "http://localhost/php-jwt/api/sendmail.php";
+  private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/api/sendmail.php";
+  // private apiURL = "http://localhost/php-jwt/api/sendmail.php";
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private httpClient: HttpClient) { }
