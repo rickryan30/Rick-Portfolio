@@ -11,7 +11,9 @@ import { Testimonials } from '../models/testimonials.model';
 }) 
 export class TestimonialsService {
 
-  private apiURL = "https://php-jwt.netlify.app/";
+  private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/";
+
+  // private apiURL = "http://localhost/php-jwt-example/";
 
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json'); 
 
