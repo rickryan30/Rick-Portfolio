@@ -76,7 +76,7 @@ export class SidebarComponent implements OnInit {
       this.getVisitorCount = '0';
     });
 
-    // fetch all testimoniala and count
+    // fetch all testimoniala and count 
     this.testimonialsService.getAll().subscribe(data => {
       // console.log(data);
       this.getTesti = data;
