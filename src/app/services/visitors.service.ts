@@ -24,7 +24,7 @@ export class VisitorsService {
   }
 
   getAll(): Observable<Visitors[]> {
-    return this.httpClient.get<Visitors[]>(this.apiURL + 'api/visitors/get.php')
+    return this.httpClient.get<Visitors[]>(this.apiURL + 'api/visitors/get.php', { headers: this.httpHeaders})
     .pipe(
       catchError(this.errorHandler)
     )
