@@ -30,15 +30,17 @@ export class AboutComponent implements OnInit {
   visitorCountry:any;
   
   visitorLocation:any;
-
+  foundIp = false;
   getVisitor:any = [];
   getvisitorAll:any = [];
-  getvisitorCount:any = [];
-  
+  getIp: any;
+  getIpResult: any;
   constructor(
   public datepipe: DatePipe,
   public visitorService: VisitorsService
-  ) { }
+  ) {  }
+
+  
 
   async ngOnInit(): Promise<void> {
     new navslide();
@@ -49,21 +51,26 @@ export class AboutComponent implements OnInit {
     this.visitorCountry = this.result.country;
     // console.log(this.result.country);
 
-    // fetch visitor by user_IP
-    this.visitorService.getVisitorsUserIP(this.ipAddress)
-    .subscribe({
-      next:(res: Visitors) => {
-        this.getVisitor = res;
-        if (this.getVisitor.status === 'success') {
-        this.visitorLocation = this.getVisitor.data[0].country;
-        // console.log(this.getVisitor.data[0].country);
+    
+    this.visitorService.getAll().subscribe(data => {
+      this.getVisitor = data;
+      if (this.getVisitor.status === 'success') {
+        this.getvisitorAll = this.getVisitor.data;
+        for(let getVisits of this.getvisitorAll){
+          this.getIp = (getVisits.user_ip==this.ipAddress) ? true : false;
         }
-      }, error: err => {
-        console.error(err);
+        this.getIpResult = (this.getIp==true) ? this.getIp: this.addVisitors();
+        console.log(this.getIpResult);
+      }
+    }, (err) => {
+        console.log(err);
         this.addVisitors();
-      },
     });
   }
+
+  
+
+  
 
   // add user IP when click like button
   addVisitors(): any {
@@ -75,12 +82,13 @@ export class AboutComponent implements OnInit {
       key:'P@ssw0rd'
     };
 
-    this.visitorService.addVisitors(data)
-    .subscribe({
-      next:(res) => { 
+    this.visitorService.create(data)
+   .subscribe((res:any) => {
+      if (res.status === 'success') {
         console.log(res);
-      }, error: err => console.error('Visitor error ' + err),
-      complete: () => console.log('Visitor visited!')
+      }
+    }, (err) => {
+        console.log(err);
     });
   }
 

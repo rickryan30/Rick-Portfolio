@@ -1,10 +1,8 @@
-import { Component, OnInit, NgZone, Input, ViewChild, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { TestimonialsService } from 'src/app/services/testimonials.service';
 import { RepliesService } from 'src/app/services/replies.service';
-import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
+import { FormGroup, Validators, FormBuilder} from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { faComments } from '@fortawesome/free-regular-svg-icons';
@@ -14,6 +12,7 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faLocation } from '@fortawesome/free-solid-svg-icons';
+import { Testimonials } from 'src/app/models/testimonials.model';
 
 declare var navslide: any;
 
@@ -59,8 +58,15 @@ export class TestimonialComponent implements OnInit {
   
   tIdValue: any;
 
+  testimonials: Testimonials = {
+    name: '',
+    testimonials: '', 
+    country: '',
+    postedon: ''
+  };
+
   constructor(
-    public testimonialsService: TestimonialsService,
+    private testimonialsService: TestimonialsService,
     public repliesService: RepliesService,
     private formBuilder: FormBuilder,
     public datepipe: DatePipe) { 
@@ -81,6 +87,8 @@ export class TestimonialComponent implements OnInit {
     // console.log(this.tIdValue);
     }
    async ngOnInit(): Promise<void> {
+
+    
     new navslide();
     // geolocation
     this.request = await fetch("https://ipinfo.io/json?token=1509eda3fb61e2");
@@ -92,7 +100,7 @@ export class TestimonialComponent implements OnInit {
     this.fetcTestimonials();
 
     // fetch all replies and count
-    this.repliesService.getReplies().subscribe(data => {
+    this.repliesService.getAll().subscribe(data => {
       // console.log(data);
       this.getReply = data;
       this.getAllReply = this.getReply.data; 
@@ -103,7 +111,7 @@ export class TestimonialComponent implements OnInit {
 
 fetcTestimonials(): void {
   // fetch all testimoniala and count
-  this.testimonialsService.geTesti().subscribe(data => {
+  this.testimonialsService.getAll().subscribe(data => {
     // console.log(data);
     this.getTesti = data;
     this.getAllTesti = this.getTesti.data; 
@@ -130,41 +138,38 @@ get rF(){
   return this.replyForm.controls;
 }
 
-  addTesti(): void {
-    let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
-    let data = {
+  addTesti(): any {
+    var currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
+    var data = {
       name: this.form.value.name,
       testimonials: this.form.value.testimonials,
       country: this.visitorCountry,
-      postedon: currentDateTime
-//       key:'P@ssw0rd'
-    };
+      postedon: currentDateTime,
+      key:'P@ssw0rd'
+    }
 
-    this.testimonialsService.addTesti(data)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-        },
-        error: (e) => console.error(e)
-      });
+    console.log(this.form.value.name);
+    console.log(this.form.value.testimonials);
+    console.log(this.visitorCountry);
+    console.log(currentDateTime);
 
-    // this.testimonialsService.addTesti(data)
-    // .subscribe((res:any) => {
-    //   if (res.status === 'success') {
-    //     Swal.fire({
-    //       title: 'Thank You!',
-    //       text: 'Testimonial has been posted.',
-    //       icon: 'success',
-    //     }).then(() => {
-    //       this.refreshPage();
-    //     });
-    //   }
-    // }, (err) => {
-    //     console.log(err);
-    // });
+    this.testimonialsService.create(data)
+   .subscribe((res:any) => {
+      if (res.status === 'success') {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Thank You for the comment/s.',
+          icon: 'success',
+        }).then(() => {
+          this.refreshPage();
+        });
+      }
+    }, (err) => {
+        console.log(err);
+    });
   }
 
-  addReplies() {
+  addReplies(): any {
     // console.log(this.tIdValue);
     let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     let data = {
@@ -172,11 +177,11 @@ get rF(){
       name: this.replyForm.value.name,
       reply: this.replyForm.value.reply,
       country: this.visitorCountry,
-      postedon: currentDateTime
-      // key:'P@ssw0rd'
+      postedon: currentDateTime,
+      key:'P@ssw0rd'
     };
 
-    this.repliesService.addReplies(data)
+    this.repliesService.create(data)
     .subscribe((res:any) => {
       if (res.status === 'success') {
         Swal.fire({

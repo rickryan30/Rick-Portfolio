@@ -51,38 +51,38 @@ export class SidebarComponent implements OnInit {
     this.ipAddress = this.result.ip;
     this.visitorCountry = this.result.country;
  
-    // fetch like by user_IP
-    this.likeService.getLikesUserIP(this.ipAddress)
-    .subscribe({
-      next:(res: Likes) => {
-        this.getlike = res;
-        if (this.getlike.status === 'success') {
-          this.visitorIP = this.getlike.data[0].user_ip;
+   // fetch all likes and count
+    this.likeService.getAll().subscribe(data => {
+      this.getlike = data;
+      if (this.getlike.status === 'success') {
+        this.getlikeAll = this.getlike.data;
+        this.getlikeCount = this.getlike.count;
+        for(let getLikes of  this.getlikeAll){
+          if(getLikes.user_ip == this.ipAddress){
+             this.visitorIP = getLikes.user_ip;
+          }
         }
-      }, error: err => console.error(err) 
-    });
-    
-    // fetch all likes and count
-    this.likeService.getLikes().subscribe(data => {
-      // console.log(data);
-      this.getlikeAll = data;
-      if (this.getlikeAll.status === 'success') {
-        this.getlikeCount = this.getlikeAll.count;
       }
+    }, (err) => {
+      this.getlikeCount = '0';
     });
 
-    // fetch all visitors and count
-    this.visitorService.getVisitors().subscribe(data => {
+    //  fetch all visitors and count
+    this.visitorService.getAll().subscribe(data => {
       // console.log(data);
       this.getVisitorAll = data;
       this.getVisitorCount = this.getVisitorAll.count; 
+    }, (err) => {
+      this.getVisitorCount = '0';
     });
 
     // fetch all testimoniala and count
-    this.testimonialsService.geTesti().subscribe(data => {
+    this.testimonialsService.getAll().subscribe(data => {
       // console.log(data);
       this.getTesti = data;
       this.getTestiCount = this.getTesti.count; 
+    }, (err) => {
+      this.getTestiCount = '0';
     });
   }
 
@@ -96,7 +96,7 @@ export class SidebarComponent implements OnInit {
       key:'P@ssw0rd'
     };
 
-    this.likeService.addLikes(data)
+    this.likeService.create(data)
    .subscribe((res:any) => {
       if (res.status === 'success') {
         Swal.fire({
@@ -108,7 +108,7 @@ export class SidebarComponent implements OnInit {
         });
       }
     }, (err) => {
-        console.log(err);
+        console.log('ERROR');
     });
   }
 

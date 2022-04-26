@@ -9,38 +9,34 @@ import { Likes } from '../models/likes.model';
   providedIn: 'root'
 })
 export class LikesService {
-  
-  REST_API: string = 'https://kcirnayr.000webhostapp.com/api/likes';
+
+  private apiURL = "http://localhost/php-jwt-example/";
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private httpClient: HttpClient) { }
 
-  //get all
-  getLikes() {
-    return this.httpClient.get(`${this.REST_API}` + `/get.php`);
+  find(user_ip: any): Observable<Likes> {
+    return this.httpClient.get<Likes>(this.apiURL + 'api/likes/get.php?user_ip=' + user_ip, { headers: this.httpHeaders})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getAll(): Observable<Likes[]> {
+    return this.httpClient.get<Likes[]>(this.apiURL + 'api/likes/get.php')
+    .pipe(
+      catchError(this.errorHandler)
+    )
   }
   
-  // Get single 
-  getLikesUserIP(user_ip:any): Observable<any> {
-    let API_URL = `${this.REST_API}/get.php?user_ip=${user_ip}`;
-    return this.httpClient.get(API_URL, { headers: this.httpHeaders})
-      .pipe(map((res: any) => {
-          return res || {}
-        }),
-        catchError(this.errorHandler)
-      )
-  }
- 
+  create(data: Likes): Observable<Likes> {
+    return this.httpClient.post<Likes>(this.apiURL + 'api/likes/insert_likes.php', JSON.stringify(data), { headers: this.httpHeaders})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }  
 
-  // Add
-  addLikes(data: Likes): Observable<any> {
-    let API_URL = `${this.REST_API}/insert_likes.php`;
-    return this.httpClient.post<Likes>(API_URL, data)
-      .pipe(
-        catchError(this.errorHandler)
-      )
-  }
 
   errorHandler(error: any) {
     let errorMessage = '';

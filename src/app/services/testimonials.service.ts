@@ -1,47 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { map, Observable, observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs';
 import { Testimonials } from '../models/testimonials.model';
 
+
 @Injectable({
   providedIn: 'root'
-})
+}) 
 export class TestimonialsService {
 
-  REST_API: string = 'https://kcirnayr.000webhostapp.com/api';
-  
-  httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-  httpOptions = new HttpHeaders().set('Accept', 'application/json');
-  
+  private apiURL = "http://localhost/php-jwt-example/";
+
+  httpHeaders = new HttpHeaders().set('Content-Type', 'application/json'); 
+
   constructor(private httpClient: HttpClient) { }
 
-  //get all
-  geTesti() {
-    return this.httpClient.get(`${this.REST_API}` + `/testimonials/get.php`);
-  }
-   
-  // Get single 
-  getTestId(id:any): Observable<any> {
-    let API_URL = `${this.REST_API}/testimonials/get.php?id=${id}`;
-    return this.httpClient.get(API_URL, { headers: this.httpHeaders})
-      .pipe(map((res: any) => {
-          return res || {}
-        }),
-        catchError(this.errorHandler)
-      )
-  }
- 
 
-  // Add
-  addTesti(data: Testimonials): Observable<Testimonials> {
-    let API_URL = `${this.REST_API}/testimonials/insert_testimonial.php`;
-    return this.httpClient.post<Testimonials>(API_URL, data, { headers: this.httpHeaders})
-      .pipe(
-        catchError(this.errorHandler)
-      )
+  getAll(): Observable<Testimonials[]> {
+    return this.httpClient.get<Testimonials[]>(this.apiURL + 'api/testimonials/get.php')
+    .pipe(
+      catchError(this.errorHandler)
+    )
   }
+  
+  create(data: Testimonials): Observable<Testimonials> {
+    return this.httpClient.post<Testimonials>(this.apiURL + 'api/testimonials/insert_testimonial.php', JSON.stringify(data), { headers: this.httpHeaders})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }  
+
 
   errorHandler(error: any) {
     let errorMessage = '';
@@ -51,5 +41,5 @@ export class TestimonialsService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
-  }
+ }
 }
