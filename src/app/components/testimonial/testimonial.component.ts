@@ -167,7 +167,7 @@ get rF(){
     }, (err) => {
         console.log(err);
     });
-  }
+  } 
 
   addReplies(): any {
     // console.log(this.tIdValue);

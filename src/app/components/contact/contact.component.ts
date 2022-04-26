@@ -35,8 +35,18 @@ export class ContactComponent implements OnInit {
     return this.sendmailForm.controls;
   }
 
-  sendEmail():void{
-    this.sendmailService.sendmail(this.sendmailForm.value.mailername,this.sendmailForm.value.maileremail,this.sendmailForm.value.mailarea)
+  sendEmail():any{
+    var data = {
+      mailername: this.sendmailForm.value.mailername,
+      maileremail: this.sendmailForm.value.maileremail,
+      mailarea: this.sendmailForm.value.mailarea
+    }
+
+    console.log(this.sendmailForm.value.mailername);
+    console.log(this.sendmailForm.value.maileremail);
+    console.log(this.sendmailForm.value.mailarea);
+
+    this.sendmailService.sendmail(data)
     .subscribe(data => {
       console.log(data);
     }, (err) => {
