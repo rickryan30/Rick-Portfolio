@@ -10,7 +10,7 @@ import { Visitors } from '../models/visitors.model';
 })
 export class VisitorsService {
 
-  private apiURL = "http://localhost/php-jwt-example/";
+  private apiURL = "https://php-jwt.netlify.app/";
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 

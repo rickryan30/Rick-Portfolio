@@ -10,7 +10,7 @@ import { Replies } from '../models/replies.model';
 })
 export class RepliesService {
 
-  private apiURL = "http://localhost/php-jwt-example/";
+  private apiURL = "https://php-jwt.netlify.app/";
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 
