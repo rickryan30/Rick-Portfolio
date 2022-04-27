@@ -4,6 +4,11 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { faComments } from '@fortawesome/free-regular-svg-icons';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faMessage } from '@fortawesome/free-regular-svg-icons';
+import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
+
 declare var navslide: any;
 
 @Component({
@@ -15,6 +20,9 @@ export class ContactComponent implements OnInit {
 
   faMailReply = faMailReply;
   faEnvelope = faEnvelope;
+  faUser = faUser;
+  faComments = faComments;
+  faCommentAlt = faCommentAlt;
 
   sendmailForm!: FormGroup;
   name: FormControl = new FormControl("", [Validators.required]);

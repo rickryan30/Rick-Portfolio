@@ -485,6 +485,10 @@ button.btn.btn-danger.btn-reply-override:focus {
     padding: 30px 0;
 }
 
+.input-group-prepend.override-input-prepend fa-icon.faEnvelope {
+  padding: 7px 0;
+}
+
 .card.mb-3.override-card {
   color: #373e44;
   font-weight: 600;
@@ -731,6 +735,20 @@ hr.testi-hr {
     margin-top: 25px;
 }
 
+button.btn.btn-primary.bntdwnld {
+  border: 2px solid #ffffff;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 22px;
+  background-color: transparent;
+}
+
+button.btn.btn-primary.bntdwnld:hover {
+  text-decoration: none;
+  border: 2px solid #f2aa4c;
+  color: #f2aa4c;
+}
 /* scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -1164,7 +1182,7 @@ h4.write-us {
     border-right: 2px solid #eae3d8;
 }
 
-.contact input[type="text"],
+/* .contact input[type="text"],
 select.form-control {
   background: transparent;
   border: none;
@@ -1198,15 +1216,15 @@ select.form-control {
 select.form-control {
   background: transparent;
   border: none;
-  /*border-bottom: 1px solid #fff;*/
+  border-bottom: 1px solid #fff;
   -webkit-box-shadow: none;
   box-shadow: none;
   border-radius: 0;
   color: #fff;
   padding: .375rem .0rem;
-}
+} */
 
-.contact .form-control:focus {
+/* .contact .form-control:focus {
     color: #495057;
     background-color: transparent;
     border-color: transparent;
@@ -1214,7 +1232,7 @@ select.form-control {
     color: white;
     box-shadow: none;
     border-bottom: 1px solid #fff; 
-}
+} */
 
 .send-button a {
     color: #373e44;
@@ -1900,6 +1918,10 @@ div.ps-toolbar-play div.ps-toolbar-content
 }
 
 @media screen and (max-width: 991px) and (min-width: 768px) {
+  
+  .col-lg-4 .right-footer p fa-icon {
+      color: #373e44;
+  }
   .header-banner {
     background-image: none;
     background-color:#f2aa4c;

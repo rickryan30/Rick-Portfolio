@@ -4,65 +4,78 @@
     </div><!-- end header-title-->
     
     <div class="contact">
+            
         <form [formGroup]="sendmailForm" (ngSubmit)="sendEmail()">
-            <div class="row">
-                    <div class="col-md-6 col-border-right">
-                        <div class="form-group">
-                            <label for="exampleInputName">Name</label>
-                            <input formControlName="name"
-                                    class="form-control"
-                                    id="name"
-                                    name="name"
-                                    type="text" [ngClass]="{'is-invalid':f['name'].touched && f['name'].invalid, 
-                                    'is-valid': f['name'].untouched && f['name'].valid}">
-                                    <div *ngIf="f['name'].touched && f['name'].invalid" class="invalid-feedback">
-                                        Please provide a name.
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend override-input-prepend">
+                                        <fa-icon [icon]="faUser" class="fuser"></fa-icon>
                                     </div>
-                         </div>
-
-                          <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input
-                            formControlName="email"
-                                class="form-control"
-                                id="email"
-                                type="email"
-                                name="email"  [ngClass]="{'is-invalid':f['email'].touched && f['email'].invalid, 
-                                'is-valid': f['email'].untouched && f['email'].valid}">
-                                <div *ngIf="f['email'].touched && f['email'].invalid" class="invalid-feedback">
-                                    Please provide a email.
+                                    <input
+                                        formControlName="name"
+                                        id="name"
+                                        name="name"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Name"
+                                        [ngClass]="{'is-invalid':f['name'].touched && f['name'].invalid, 
+                                                    'is-valid': f['name'].untouched && f['name'].valid}">
+                                        <div *ngIf="f['name'].touched && f['name'].invalid" class="invalid-feedback">
+                                            Please provide a name.
+                                        </div>
                                 </div>
-                            <small id="emailHelp" class="form-text text-muted">I will never share your email with anyone else.</small>
-                          </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Message</label>
-                            <textarea
-                                formControlName="message" 
-                                class="form-control" 
-                                id="message" 
-                                name="message" 
-                                rows="6"
-                                [ngClass]="{'is-invalid':f['message'].touched && f['message'].invalid, 
-                                            'is-valid': f['message'].untouched && f['message'].valid}">
-                            </textarea>
-                            <div *ngIf="f['message'].touched && f['message'].invalid" class="invalid-feedback">
-                                Please provide a Message.
                             </div>
-                          </div>
-                    </div>
-                    <div class="col-md-12 d-flex justify-content-end">
-                        <button class="btn btn-primary sendEmail" id="send_email" role="button" type="submit" [disabled]="!sendmailForm.valid">
-                            <fa-icon [icon]="faMailReply"></fa-icon> 
-                            SEND MESSAGE
-                        </button>
-                        <input [formControl]="honeypot" class="hiddenForm" type="text" />
-                    </div>
-            </div>
-         </form>
-        
-    </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend override-input-prepend">
+                                        <fa-icon [icon]="faEnvelope" class="faEnvelope"></fa-icon>
+                                    </div>
+                                    <input
+                                        formControlName="email"
+                                        id="email"
+                                        name="email"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Email"
+                                        [ngClass]="{'is-invalid':f['email'].touched && f['email'].invalid, 
+                                                    'is-valid': f['email'].untouched && f['email'].valid}">
+                                        <div *ngIf="f['email'].touched && f['email'].invalid" class="invalid-feedback">
+                                            Please provide a email.
+                                        </div>
+                                </div>
+                            </div>
 
-</div>
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend override-input-prepend">
+                                        <fa-icon [icon]="faCommentAlt" class="fcomment"></fa-icon>
+                                    </div>
+                                    <textarea
+                                        formControlName="message" 
+                                        class="form-control" 
+                                        id="message" 
+                                        name="message" 
+                                        placeholder="Message" 
+                                        rows="3"
+                                        [ngClass]="{'is-invalid':f['message'].touched && f['message'].invalid, 
+                                                    'is-valid': f['message'].untouched && f['message'].valid}">
+                                    </textarea>
+                                    <div *ngIf="f['message'].touched && f['message'].invalid" class="invalid-feedback">
+                                        Please provide a message.
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end row-->
+                            
+                        <input [formControl]="honeypot" class="hiddenForm" type="text" />
+                          <div class="col-md-12 d-flex justify-content-end">
+                            <button class="btn btn-primary sendEmail" role="button" type="submit" [disabled]="!sendmailForm.valid">
+                                <fa-icon [icon]="faMailReply"></fa-icon> 
+                                SEND MESSAGE
+                            </button>
+                           </div>
+            </form>
+    </div><!-- end contact-->
+
+</div><!-- end container-right-box-->

@@ -17,3 +17,25 @@ function navslide() {
 document.addEventListener('DOMContentLoaded', function(){
     Code.photoSwipe('a', '#Gallery', { captionAndToolbarHideOnSwipe: false } );
 }, false);
+
+async function downloadFile(fileName) {
+    const url = 'https://medillorickryan.000webhostapp.com/resume/RickRyan.docx';
+
+    const link = document.createElement('a');
+    link.href = await toDataURL(url);
+    link.setAttribute('download', fileName ? fileName : url.split('/').pop());
+    link.setAttribute('target', 'blank');
+    document.body.appendChild(link);
+    link.click();
+}
+
+
+function toDataURL(url) {
+    return fetch(url)
+        .then((response) => {
+            return response.blob();
+        })
+        .then((blob) => {
+            return URL.createObjectURL(blob);
+        });
+}
