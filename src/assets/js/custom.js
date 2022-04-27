@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function(){
 }, false);
 
 async function downloadFile(fileName) {
-    const url = 'https://medillorickryan.000webhostapp.com/resume/RickRyan.docx';
+    const url = 'https://github.com/rickryan30/Rick-Portfolio/raw/main/src/assets/RickRyan.docx';
 
     const link = document.createElement('a');
     link.href = await toDataURL(url);
