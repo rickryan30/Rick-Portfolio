@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { faComments } from '@fortawesome/free-regular-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faMessage } from '@fortawesome/free-regular-svg-icons';
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 
 declare var navslide: any;

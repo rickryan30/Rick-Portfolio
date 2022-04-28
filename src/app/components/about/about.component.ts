@@ -18,7 +18,7 @@ declare var navslide: any;
 })
 export class AboutComponent implements OnInit {
 
-  faUserTie = faUserTie;
+  faUserTie = faUserTie; 
   faGraduationCap = faGraduationCap;
   faAward = faAward;
   faWrench = faWrench;
@@ -35,6 +35,12 @@ export class AboutComponent implements OnInit {
   getvisitorAll:any = [];
   getIp: any;
   getIpResult: any;
+  passUserId: any;
+  getVisitedResult: any;
+  passUserVisited: any;
+  passCurrentIp: any;
+  visitedCount: any;
+  sum: any; 
   constructor(
   public datepipe: DatePipe,
   public visitorService: VisitorsService
@@ -55,31 +61,68 @@ export class AboutComponent implements OnInit {
     this.visitorService.getAll().subscribe(data => {
       this.getVisitor = data;
       if (this.getVisitor.status === 'success') {
+        console.log("success");
         this.getvisitorAll = this.getVisitor.data;
         for(let getVisits of this.getvisitorAll){
-          this.getIp = (getVisits.user_ip==this.ipAddress) ? true : false;
+          // this.getIp = (getVisits.user_ip==this.ipAddress) ? "user_ip " + getVisits.id : "computers ip " + this.ipAddress;
+          if(getVisits.user_ip==this.ipAddress) {
+            this.getIp  = true;
+            this.passUserId = getVisits.id;
+            this.passUserVisited = getVisits.visited;
+          }else {
+            this.getIp  = false;
+            this.passCurrentIp = this.ipAddress;
+          }
         }
-        this.getIpResult = (this.getIp==true) ? this.getIp: this.addVisitors();
-        console.log(this.getIpResult);
-      }
+        // end of for
+        if(this.getIp==true) {
+          this.getIpResult = this.passUserId;
+          this.getVisitedResult = this.passUserVisited; 
+          this.update();
+        }else {
+          this.getIpResult = this.passCurrentIp;
+          this.addVisitors();
+        }
+        // this.getIpResult = (this.getIp==true) ? this.passUserId : this.passCurrentIp;
+        // this.update();
+      } 
     }, (err) => {
-        console.log(err);
-        this.addVisitors();
+      this.addVisitors();
     });
   }
 
-  
+  // add user IP when click like button
+  update(): any {
+    this.visitedCount = 1;
+    this.sum = parseInt(this.visitedCount) + parseInt(this.getVisitedResult);
+    console.log(this.sum);
+    let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
+    let data = {
+      visited: this.sum,
+      postedon: currentDateTime,
+      secretKey:'Stimulator1'
+    };
 
-  
+    this.visitorService.update(this.getIpResult,data)
+   .subscribe((res:any) => {
+      if (res.status === 'success') {
+        console.log(res);
+      }
+    }, (err) => {
+        console.log(err);
+    });
+  }
 
   // add user IP when click like button
   addVisitors(): any {
     let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
+    this.visitedCount = 1;
     let data = {
       user_ip: this.ipAddress,
       country: this.visitorCountry,
+      visited: this.visitedCount,
       postedon: currentDateTime,
-      key:'P@ssw0rd'
+      secretKey:'Stimulator1'
     };
 
     this.visitorService.create(data)

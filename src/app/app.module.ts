@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { VisitorComponent } from './components/visitor/visitor.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     GalleryComponent,
     WorkComponent,
     TestimonialComponent,
-    ContactComponent
+    ContactComponent,
+    VisitorComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    DataTablesModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

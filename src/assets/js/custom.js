@@ -39,3 +39,4 @@ function toDataURL(url) {
             return URL.createObjectURL(blob);
         });
 }
+

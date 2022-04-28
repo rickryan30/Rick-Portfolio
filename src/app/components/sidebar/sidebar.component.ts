@@ -93,7 +93,7 @@ export class SidebarComponent implements OnInit {
       user_ip: this.ipAddress,
       country: this.visitorCountry,
       postedon: currentDateTime,
-      key:'P@ssw0rd'
+      secretKey:'Stimulator1'
     };
 
     this.likeService.create(data)

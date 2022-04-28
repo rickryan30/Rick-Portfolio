@@ -13,6 +13,7 @@ import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faLocation } from '@fortawesome/free-solid-svg-icons';
 import { Testimonials } from 'src/app/models/testimonials.model';
+import { faMailReply } from '@fortawesome/free-solid-svg-icons';
 
 declare var navslide: any;
 
@@ -30,6 +31,7 @@ export class TestimonialComponent implements OnInit {
   faCommentDots = faCommentDots;
   faCalendar = faCalendar;
   faLocation = faLocation;
+  faMailReply = faMailReply;
 
   ipAddress:any;
   visitorCountry:any;
@@ -145,7 +147,7 @@ get rF(){
       testimonials: this.form.value.testimonials,
       country: this.visitorCountry,
       postedon: currentDateTime,
-      key:'P@ssw0rd'
+      secretKey:'Stimulator1'
     }
 
     console.log(this.form.value.name);
@@ -178,7 +180,7 @@ get rF(){
       reply: this.replyForm.value.reply,
       country: this.visitorCountry,
       postedon: currentDateTime,
-      key:'P@ssw0rd'
+      secretKey:'Stimulator1'
     };
 
     this.repliesService.create(data)

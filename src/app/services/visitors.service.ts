@@ -11,10 +11,10 @@ import { Visitors } from '../models/visitors.model';
 export class VisitorsService {
 
   private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/";
-  // private apiURL = "http://localhost/php-jwt-example/";
+  // private apiURL = "http://localhost/php-jwt/";
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-
+ 
   constructor(private httpClient: HttpClient) { }
 
   find(user_ip: any): Observable<Visitors> {
@@ -33,6 +33,13 @@ export class VisitorsService {
   
   create(data: Visitors): Observable<Visitors> {
     return this.httpClient.post<Visitors>(this.apiURL + 'api/visitors/insert_visitor.php', JSON.stringify(data), { headers: this.httpHeaders})
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  update(id: any, data: Visitors): Observable<Visitors> {
+    return this.httpClient.put<Visitors>(this.apiURL + 'api/visitors/update_visitor.php?id=' + id, JSON.stringify(data), { headers: this.httpHeaders})
     .pipe(
       catchError(this.errorHandler)
     )

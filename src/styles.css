@@ -1567,61 +1567,66 @@ span.category-list a:hover {
   font-weight: 600;
 }
 
-.col-md-12.visitor table {
+.visitor table {
   color: #373e44;
-  background: #f2aa4c;
+  background: #ffffff;
   text-align: center;
 }
 
-.col-md-12.visitor table.dataTable thead th, table.dataTable thead td {
+.visitor table.table-striped.table-bordered thead th, table.table-striped.table-bordered thead td {
+  color: #373e44;
   border-bottom: 1px solid #373e44;
+  background-color: #f2aa4c;
 }
 
-.col-md-12.visitor table.dataTable tbody tr {
-  background-color: #eae3d8;
+.visitor table.table-striped.table-bordered {
+  border: 0;
 }
 
-.col-md-12.visitor .table-bordered td, .table-bordered th {
+
+.visitor table.table-striped.table-bordere td, .table.table-striped.table-bordere th {
   border: 1px solid #373e44;
 }
 
-.col-md-12.visitor table.dataTable.no-footer {
-  border-bottom: 1px solid #373e44;
+.visitor .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info {
+  color: #eae3d8;
 }
-
-.col-md-12.visitor .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+.visitor .dataTables_wrapper .dataTables_length select {
+  border: 1px solid #eae3d8;
   color: #eae3d8;
 }
 
-.col-md-12.visitor .table-bordered {
-  border: 1px solid #373e44;
+div#datatableexample_length select option {
+  color: #373e44;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
-   color: #928f8b !important;
-  border: 1px solid #d0c9be;
-  background: transparent;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-  color: #373e44 !important;
-  border: 1px solid #f2aa4c;
-  background-color: #f2aa4c;
-  background: linear-gradient(to bottom, #f2aa4c 0%, #f2aa4c 100%);
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button {
+div#datatableexample_paginate a {
   color: #eae3d8 !important;
+  font-weight: 500;
+}
+
+div#datatableexample_paginate a.paginate_button.current {
+  color: #373e44 !important;
+  background: #f2aa4c;
+}
+
+div#datatableexample_paginate a.paginate_button:hover {
+  color: #373e44 !important;
   border: 1px solid #eae3d8;
+  background: #eae3d8;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-  color: #f2aa4c !important;
-  border: 1px solid #f2aa4c;
-  background-color: transparent;
-  background: transparent;
+/* .visitor .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+  color: #eae3d8 !important;
 }
 
+#datatableexample_wrapper .dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: #eae3d8;
+}
+
+.visitor .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  color: #eae3d8 !important;
+} */
 /* end visitor page */
 
 .toggledAnother ul li a.active {
@@ -1881,7 +1886,7 @@ div.ps-toolbar-play div.ps-toolbar-content
     display: none;
 }
 /* mobile view */
-@media screen and (max-width: 1199px) and (min-width: 992px) {
+@media screen and (max-width: 1199px) and (min-width: 991px) {
   .row.row-break {
     display: block;
   }
@@ -1909,19 +1914,23 @@ div.ps-toolbar-play div.ps-toolbar-content
 
 }
 
-@media screen and (max-height: 900px) and (min-height: 600px) {
+/* @media screen and (max-height: 900px) and (min-height: 600px) {
 .inner-image img {
   min-width: 469px;
   min-height: 485px;
   margin-bottom: 10px;
 }
-}
+} */
 
 @media screen and (max-width: 991px) and (min-width: 768px) {
-  
+  button.btn.btn-primary.bntdwnld {
+    border: 2px solid #373e44;
+    color: #373e44;
+  }
   .col-lg-4 .right-footer p fa-icon {
       color: #373e44;
   }
+  
   .header-banner {
     background-image: none;
     background-color:#f2aa4c;
@@ -2052,7 +2061,14 @@ div.ps-toolbar-play div.ps-toolbar-content
 
 }
 
-@media screen and (max-width: 767px)  {
+@media screen and (max-width: 768px)  {
+  button.btn.btn-primary.bntdwnld {
+    border: 2px solid #373e44;
+    color: #373e44;
+  }
+  .col-lg-4 .right-footer p fa-icon {
+    color: #373e44;
+  }
   
   .header-banner {
     background-image: none;

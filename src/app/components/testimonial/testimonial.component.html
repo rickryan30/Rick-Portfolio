@@ -5,8 +5,6 @@
         </div><!-- end header-title-->
     </div>
 
-    
-    
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex justify-content-start bd-highlight mb-2">
@@ -14,7 +12,7 @@
                   <select (change)="onTableSizeChange($event)" class="custom-select select-pagi">
                     <option *ngFor="let size of tableSizes" [ngValue]="size">
                       {{ size }}
-                    </option>
+                    </option> 
                   </select>
                 </div>
               </div><!-- end d-flex flex-row-reverse-->
@@ -26,128 +24,124 @@
             </button><!-- end post button -->
         </div><!-- end col-md-6-->
     </div><!-- end row-->
-    
-    <br>
-    <ng-template ngFor let-getAllTestimonial [ngForOf]="getAllTesti | paginate
-    : {
-        itemsPerPage: tableSize,
-        currentPage: page,
-        totalItems: count
-    }" let-i="index">
-        <!-- <div class="card border-info mb-3 override-card" *ngFor="
-        let getAllTestimonial of getAllTesti
-        | paginate
+
+    <div class="row">
+        <div class="col-md-12">
+            <ng-template ngFor let-getAllTestimonial [ngForOf]="getAllTesti | paginate
             : {
                 itemsPerPage: tableSize,
                 currentPage: page,
                 totalItems: count
-            };
-        let i = index"> -->
-        <!-- {{ getAllTestimonial.id }} -->
-    <div class="card border-info mb-3 override-card">
-        <div class="card-header">
-            <div class="float-left"><fa-icon [icon]="faUser"></fa-icon> {{ getAllTestimonial.name }}</div>
-            <div class="float-right"><fa-icon [icon]="faCalendar"></fa-icon> {{ getAllTestimonial.postedon | date:'medium' }} </div>
-        </div>
-        <div class="card-body">
-          <p class="card-text">{{ getAllTestimonial.testimonials }}</p>
-        </div>
-        <div class="card-footer">
-             <div class="float-left country-override"><fa-icon [icon]="faLocation" class="footerIcon"></fa-icon> {{ getAllTestimonial.country }}</div>
-            <div class="float-right">
-                <button type="button" class="btn btn-danger btn-reply-override float-right" data-toggle="modal" [attr.data-target]="'#reply_button_modal' + getAllTestimonial.id" (click)="onItemSelector(getAllTestimonial.id)">
-                <fa-icon [icon]="faCommentAlt"></fa-icon> Reply
-            </button></div>
-            <!-- reply button -->
-        </div>
-
-        <!-- Reply Modal -->
-        <div class="modal fade reply-modal" id="reply_button_modal{{ getAllTestimonial.id }}" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title override-modal-title">Reply to <span>{{ getAllTestimonial.name }}</span>  's Post</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div><!-- End Modal Header -->
-                <form [formGroup]="replyForm" (ngSubmit)="addReplies()">
-                
-                <div class="modal-body">
-                <div class="col-md-12">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend override-input-prepend align-middle">
-                            <fa-icon [icon]="faUser" class="fuser"></fa-icon>
+            }" let-i="index">
+            <ul id="comments-list" class="comments-list">
+                <li>
+                    <div class="comment-main-level">
+                        <!-- comment area -->
+                        <div class="comment-box">
+                            <div class="comment-head">
+                                <h6 class="comment-name">{{ getAllTestimonial.name }}</h6>
+                                <span class="badge badge-info mr-2">{{ getAllTestimonial.country }}</span>
+                                <span>{{ getAllTestimonial.postedon | date:'medium' }}</span>
+                                <button class="replyLink" data-toggle="modal" [attr.data-target]="'#reply_modal' + getAllTestimonial.id" (click)="onItemSelector(getAllTestimonial.id)"><fa-icon [icon]="faMailReply"></fa-icon> Reply</button>
+                            </div>
+                            <div class="comment-content">
+                                {{ getAllTestimonial.testimonials }}
+                            </div>
                         </div>
-                        <input
-                        formControlName="name"
-                        id="name{{ getAllTestimonial.id }}"
-                        name="name{{ getAllTestimonial.id }}"
-                        type="text"
-                        class="form-control"
-                        placeholder="Name"
-                        [ngClass]="{'is-invalid':rF['name'].touched && rF['name'].invalid, 
-                                    'is-valid': rF['name'].untouched && rF['name'].valid}">
-                        <div *ngIf="rF['name'].touched && rF['name'].invalid" class="invalid-feedback">
-                            Please provide a name.
-                        </div>
+                        <!-- Reply Modal -->
+                        <div class="modal fade reply-modal" id="reply_modal{{ getAllTestimonial.id }}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-md" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title override-modal-title">Reply to <span>{{ getAllTestimonial.name }}</span>  's Post</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div><!-- End Modal Header -->
+                                <form [formGroup]="replyForm" (ngSubmit)="addReplies()">
+                                
+                                <div class="modal-body">
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend override-input-prepend align-middle">
+                                            <fa-icon [icon]="faUser" class="fuser"></fa-icon>
+                                        </div>
+                                        <input
+                                        formControlName="name"
+                                        id="name{{ getAllTestimonial.id }}"
+                                        name="name{{ getAllTestimonial.id }}"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Name"
+                                        [ngClass]="{'is-invalid':rF['name'].touched && rF['name'].invalid, 
+                                                    'is-valid': rF['name'].untouched && rF['name'].valid}">
+                                        <div *ngIf="rF['name'].touched && rF['name'].invalid" class="invalid-feedback">
+                                            Please provide a name.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend override-input-prepend">
+                                            <fa-icon [icon]="faCommentAlt" class="fcomment"></fa-icon>
+                                        </div>
+                                        <textarea
+                                        formControlName="reply" 
+                                        class="form-control" 
+                                        id="reply{{ getAllTestimonial.id }}" 
+                                        name="reply{{ getAllTestimonial.id }}" 
+                                        placeholder="Your Reply" 
+                                        rows="3"
+                                        [ngClass]="{'is-invalid':rF['reply'].touched && rF['reply'].invalid, 
+                                                    'is-valid': rF['reply'].untouched && rF['reply'].valid}">
+                                    </textarea>
+                                    <div *ngIf="rF['reply'].touched && rF['reply'].invalid" class="invalid-feedback">
+                                        Please provide a reply.
+                                    </div>
+                                    </div>
+                                </div>
+                                
+                                </div><!-- End Modal Body -->
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fa-icon [icon]="faTimesCircle"></fa-icon> Close</button>
+                                    <!-- <button class="btn btn-primary savebtn" user-pid="" id="reply_button" role="button" type="submit" name="reply_button"><fa-icon [icon]="faCommentDots"></fa-icon> Reply</button> -->
+                                    <button class="btn btn-primary savebtn" role="button" id="{{ getAllTestimonial.id }}" name="{{ getAllTestimonial.id }}" type="submit" [disabled]="!replyForm.valid"><fa-icon [icon]="faCommentDots"></fa-icon> Post</button>
+                                    </div><!-- End Modal Footer -->
+
+                                </form>
+                            </div><!-- End Modal Content -->
+                            </div>
+                        </div><!-- End Reply Modal -->
                     </div>
-                </div>
+                    <!-- Reply area -->
+                    <ul class="comments-list reply-list">
+                        <li *ngFor="let getAllReplies of getAllReply">
+                            <!-- reply box-->
+                            <div class="comment-box" *ngIf="getAllReplies.tid == getAllTestimonial.id ">
+                                <div class="comment-head">
+                                    <h6 class="comment-name replyname">{{getAllReplies.name}}</h6>
+                                    <span class="badge badge-info mr-2">{{getAllReplies.country}}</span>
+                                    <span>{{ getAllReplies.postedon | date:'medium' }} </span>
+                                </div>
+                                <div class="comment-content">
+                                    {{getAllReplies.reply}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul><!-- end of reply-list -->
+                </li>
+    
 
-                <div class="col-md-12">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend override-input-prepend">
-                            <fa-icon [icon]="faCommentAlt" class="fcomment"></fa-icon>
-                        </div>
-                        <textarea
-                        formControlName="reply" 
-                        class="form-control" 
-                        id="reply{{ getAllTestimonial.id }}" 
-                        name="reply{{ getAllTestimonial.id }}" 
-                        placeholder="Your Reply" 
-                        rows="3"
-                        [ngClass]="{'is-invalid':rF['reply'].touched && rF['reply'].invalid, 
-                                    'is-valid': rF['reply'].untouched && rF['reply'].valid}">
-                    </textarea>
-                    <div *ngIf="rF['reply'].touched && rF['reply'].invalid" class="invalid-feedback">
-                        Please provide a reply.
-                    </div>
-                    </div>
-                </div>
-                
-                </div><!-- End Modal Body -->
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fa-icon [icon]="faTimesCircle"></fa-icon> Close</button>
-                    <!-- <button class="btn btn-primary savebtn" user-pid="" id="reply_button" role="button" type="submit" name="reply_button"><fa-icon [icon]="faCommentDots"></fa-icon> Reply</button> -->
-                    <button class="btn btn-primary savebtn" role="button" id="{{ getAllTestimonial.id }}" name="{{ getAllTestimonial.id }}" type="submit" [disabled]="!replyForm.valid"><fa-icon [icon]="faCommentDots"></fa-icon> Post</button>
-                    </div><!-- End Modal Footer -->
-
-                </form>
-            </div><!-- End Modal Content -->
-            </div>
-        </div><!-- End Reply Modal -->
-      </div>
-      <div class="col-md-10 offset-md-2" *ngFor="let getAllReplies of getAllReply">
-        <div class="row">
-            <div class="card mb-3 mt-3 reply-card" *ngIf="getAllReplies.tid == getAllTestimonial.id ">
-                <div class="card-header">
-                    <div class="float-left"><fa-icon [icon]="faUser"></fa-icon> {{ getAllReplies.name }}</div>
-                    <div class="float-right"><fa-icon [icon]="faCalendar"></fa-icon> {{ getAllReplies.postedon | date:'medium' }} </div>
-                </div>
-                <div class="card-body">
-                  <p class="card-text">{{ getAllReplies.reply }}</p>
-                </div>
-                <div class="card-footer">
-                    <div class="float-left country-override"><fa-icon [icon]="faLocation" class="footerIcon"></fa-icon> {{ getAllReplies.country }}</div>
-                </div>
-             </div><!-- end of reply-card -->
-        </div><!-- end of row -->
-      </div>
-  
-      <hr class="testi-hr">
-      </ng-template>
+            </ul><!-- end of comment-list -->
+        </ng-template>
+        </div> 
+    </div>
+    
+    
+    
       <div class="d-flex justify-content-center pagi-numbers mt-4">
         <pagination-controls
           previousLabel="Prev"

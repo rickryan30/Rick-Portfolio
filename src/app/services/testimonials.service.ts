@@ -13,7 +13,7 @@ export class TestimonialsService {
 
   private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/";
 
-  // private apiURL = "http://localhost/php-jwt-example/";
+  // private apiURL = "http://localhost/php-jwt/";
 
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json'); 
 

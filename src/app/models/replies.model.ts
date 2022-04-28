@@ -5,5 +5,5 @@ export class Replies {
     reply?: any;
     country?: any ;
     postedon?: any;
-    key?: any;
+    secretKey?: any;
 }
