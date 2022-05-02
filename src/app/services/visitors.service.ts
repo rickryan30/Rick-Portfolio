@@ -12,34 +12,35 @@ export class VisitorsService {
 
   private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/";
   // private apiURL = "http://localhost/php-jwt/";
+
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
  
   constructor(private httpClient: HttpClient) { }
 
   find(user_ip: any): Observable<Visitors> {
-    return this.httpClient.get<Visitors>(this.apiURL + 'api/visitors/get.php?user_ip=' + user_ip, { headers: this.httpHeaders})
+    return this.httpClient.get<Visitors>(this.apiURL + 'visitors/get.php?user_ip=' + user_ip, { headers: this.httpHeaders})
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
   getAll(): Observable<Visitors[]> {
-    return this.httpClient.get<Visitors[]>(this.apiURL + 'api/visitors/get.php')
+    return this.httpClient.get<Visitors[]>(this.apiURL + 'visitors/get.php')
     .pipe(
       catchError(this.errorHandler)
     )
   }
   
   create(data: Visitors): Observable<Visitors> {
-    return this.httpClient.post<Visitors>(this.apiURL + 'api/visitors/insert_visitor.php', JSON.stringify(data), { headers: this.httpHeaders})
+    return this.httpClient.post<Visitors>(this.apiURL + 'visitors/insert_visitor.php', JSON.stringify(data), { headers: this.httpHeaders})
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
   update(id: any, data: Visitors): Observable<Visitors> {
-    return this.httpClient.put<Visitors>(this.apiURL + 'api/visitors/update_visitor.php?id=' + id, JSON.stringify(data), { headers: this.httpHeaders})
+    return this.httpClient.put<Visitors>(this.apiURL + 'visitors/update_visitor.php?id=' + id, JSON.stringify(data), { headers: this.httpHeaders})
     .pipe(
       catchError(this.errorHandler)
     )

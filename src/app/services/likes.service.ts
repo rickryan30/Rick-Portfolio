@@ -18,21 +18,21 @@ export class LikesService {
   constructor(private httpClient: HttpClient) { }
 
   find(user_ip: any): Observable<Likes> {
-    return this.httpClient.get<Likes>(this.apiURL + 'api/likes/get.php?user_ip=' + user_ip, { headers: this.httpHeaders})
+    return this.httpClient.get<Likes>(this.apiURL + 'likes/get.php?user_ip=' + user_ip, { headers: this.httpHeaders})
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
   getAll(): Observable<Likes[]> {
-    return this.httpClient.get<Likes[]>(this.apiURL + 'api/likes/get.php')
+    return this.httpClient.get<Likes[]>(this.apiURL + 'likes/get.php')
     .pipe(
       catchError(this.errorHandler)
     )
   }
   
   create(data: Likes): Observable<Likes> {
-    return this.httpClient.post<Likes>(this.apiURL + 'api/likes/insert_likes.php', JSON.stringify(data), { headers: this.httpHeaders})
+    return this.httpClient.post<Likes>(this.apiURL + 'likes/insert_likes.php', JSON.stringify(data), { headers: this.httpHeaders})
     .pipe(
       catchError(this.errorHandler)
     )
