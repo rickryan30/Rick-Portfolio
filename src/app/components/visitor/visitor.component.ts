@@ -15,6 +15,13 @@ export class VisitorComponent implements OnInit {
   faEnvelope = faEnvelope;
   getVisitorAll:any;
   getVisitor:any;
+  getVisitorAllMobile:any;
+  getVisitorMobile:any;
+
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 2;
+  tableSizes: any = [2, 8, 12, 16];
 
   constructor(
     public datepipe: DatePipe,
@@ -22,18 +29,39 @@ export class VisitorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.visitorService.getAll().subscribe(data => {
-      this.getVisitorAll = data;
-          this.getVisitor = this.getVisitorAll.data;
-      setTimeout(()=>{   
-        $('#datatableexample').DataTable( {
-          pagingType: 'full_numbers',
-          pageLength: 5,
-          processing: true,
-          lengthMenu : [5, 10, 25]
-      } );
-      }, 1);
-            }, error => console.error(error));
+      this.visitorService.getAll().subscribe(data => {
+        this.getVisitorAll = data;
+            this.getVisitor = this.getVisitorAll.data;
+        setTimeout(()=>{   
+          $('#datatableexample').DataTable( {
+            pagingType: 'full_numbers',
+            pageLength: 5,
+            processing: true,
+            lengthMenu : [5, 10, 25]
+        } );
+        }, 1);
+              }, error => console.error(error));
+      this.fetchVisitors();
+    }
+
+    fetchVisitors(): void {
+      // fetch all testimoniala and count
+      this.visitorService.getAll().subscribe(data => {
+        // console.log(data);
+        this.getVisitorAllMobile = data;
+        this.getVisitorMobile = this.getVisitorAllMobile.data;
+        // console.log(this.getVisitorCount);
+      });
+    }
+
+    onTableDataChange(event: any) {
+      this.page = event;
+      this.fetchVisitors();
+    }
+    onTableSizeChange(event: any): void {
+      this.tableSize = event.target.value;
+      this.page = 1;
+      this.fetchVisitors();
     }
 
 }

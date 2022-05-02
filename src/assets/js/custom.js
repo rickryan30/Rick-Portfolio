@@ -40,3 +40,6 @@ function toDataURL(url) {
         });
 }
 
+$('#datatableexample').DataTable( {
+    responsive: true
+} );

@@ -5,8 +5,51 @@
     
     <div class="visitor">
       <div class="row">
-        <div class="col-md-12">
-          <table class="table table-striped table-bordered table-sm row-border hover" id="datatableexample">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-start bd-highlight mb-2">
+              <div class="p-2 bd-highlight">
+                <select (change)="onTableSizeChange($event)" class="custom-select select-pagi">
+                  <option *ngFor="let size of tableSizes" [ngValue]="size">
+                    {{ size }}
+                  </option> 
+                </select>
+              </div>
+            </div><!-- end d-flex flex-row-reverse-->
+      </div><!-- end col-md-6-->
+        <div class="col-md-12 visible-phone d-none">
+            <ng-template ngFor let-getVisitMobile [ngForOf]="getVisitorMobile | paginate
+            : {
+              id: 'mobilePagination',
+                itemsPerPage: tableSize,
+                currentPage: page,
+                totalItems: count
+            }" let-i="index">
+
+            <div class="card">
+              <div class="card-header">
+                IP Address <span> {{ getVisitMobile.user_ip }}</span>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Country<span> {{ getVisitMobile.country }}</span></li>
+                <li class="list-group-item">Visited <span> {{ getVisitMobile.visited }}</span></li>
+                <li class="list-group-item">Date and Time <span> {{ getVisitMobile.postedon | date:'medium' }}</span></li>
+              </ul>
+            </div>
+
+            </ng-template>
+            <div class="d-flex justify-content-center pagi-numbers mt-4">
+              <pagination-controls
+              id="mobilePagination"
+                previousLabel="Prev"
+                nextLabel="Next"
+                (pageChange)="onTableDataChange($event)"
+              >
+              </pagination-controls>
+            </div>
+        </div>
+        <!-- visible md, lg and xs || hidden on sm and xs -->
+        <div class="col-md-12 d-none d-sm-block d-sm-none d-md-block">
+          <table class="table table-striped table-bordered table-sm row-border hover display" id="datatableexample" cellspacing="0" width="100%">
             <thead>
                 <tr>
                   <th scope="col">IP Address</th>
@@ -26,8 +69,8 @@
                 </tr>
               </tbody>
             </table>
-        </div>
-      </div>
+        </div><!-- end of col-md-12 -->
+      </div><!-- end of row -->
          
     </div><!-- end vsitor-->
 
