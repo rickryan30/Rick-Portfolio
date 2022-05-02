@@ -1,4 +1,5 @@
 Portfolio Website Build in Angular
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a3bc4299-53f8-413b-8d6e-79ef6fd2bd0b/deploy-status)](https://app.netlify.com/sites/rickryanmedillo/deploys)
 
 Here's the Link:
 https://rickryanmedillo.netlify.app/
