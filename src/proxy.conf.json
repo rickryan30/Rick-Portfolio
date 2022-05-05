@@ -1,9 +1,6 @@
 {
     "/api": {
-      "target": "https://kcirnayr.000webhostapp.com/api/",
-      "secure": false,
-      "timeout": 6000000,
-      "changeOrigin": true,
-      "logLevel": "debug"
+      "target": "http://localhost/php-jwt/",
+      "secure": false
     }
   }

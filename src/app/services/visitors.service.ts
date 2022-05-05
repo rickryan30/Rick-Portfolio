@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { map, Observable, observable, throwError } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs';
 import { Visitors } from '../models/visitors.model';
  
@@ -9,28 +9,45 @@ import { Visitors } from '../models/visitors.model';
   providedIn: 'root'
 })
 export class VisitorsService {
-
-  private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/";
+  status?: [] | any;
+  visitorStatus: Visitors;
+ 
+  private apiURL = "https://php-jwt.cleverapps.io/";
   // private apiURL = "http://localhost/php-jwt/";
-
   
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
  
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+    this.visitorStatus = new Visitors();
+    this.visitorStatus.status = {"status":"Failed"};
+    this.status = this.visitorStatus.status;
+  }
 
   find(user_ip: any): Observable<Visitors> {
     return this.httpClient.get<Visitors>(this.apiURL + 'visitors/get.php?user_ip=' + user_ip, { headers: this.httpHeaders})
     .pipe(
-      catchError(this.errorHandler)
-    )
+      map((data:Visitors) => {
+          if (data) {
+              return data;
+          } else {
+              return this.status; // Although you're stating to not want to return an empty array, in my opinion, an empty array would fit your case, since you're planning to return Observable<result[]>
+          }
+      })
+    );
   }
 
-  getAll(): Observable<Visitors[]> {
+  getData(): Observable<Visitors[]> {
     return this.httpClient.get<Visitors[]>(this.apiURL + 'visitors/get.php')
     .pipe(
-      catchError(this.errorHandler)
-    )
-  }
+        map((data:Visitors[]) => {
+            if (data) {
+                return data;
+            } else {
+                return this.status; // Although you're stating to not want to return an empty array, in my opinion, an empty array would fit your case, since you're planning to return Observable<result[]>
+            }
+        })
+    );
+}
   
   create(data: Visitors): Observable<Visitors> {
     return this.httpClient.post<Visitors>(this.apiURL + 'visitors/insert_visitor.php', JSON.stringify(data), { headers: this.httpHeaders})

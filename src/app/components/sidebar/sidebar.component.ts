@@ -2,7 +2,6 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faComments } from '@fortawesome/free-regular-svg-icons';
-import { Likes } from 'src/app/models/likes.model';
 import { LikesService } from 'src/app/services/likes.service';
 import { DatePipe } from '@angular/common';
 import { VisitorsService } from 'src/app/services/visitors.service';
@@ -32,11 +31,13 @@ export class SidebarComponent implements OnInit {
   getlikeAll:any = [];
   getlikeCount:any = [];
 
+  getVisitor:any = [];
   getVisitorAll:any = [];
   getVisitorCount:any = [];
   getTesti:any = [];
   getTestiCount:any = [];
- 
+  // element: any;
+
   constructor(
   public likeService: LikesService,
   public testimonialsService: TestimonialsService,
@@ -51,39 +52,71 @@ export class SidebarComponent implements OnInit {
     this.ipAddress = this.result.ip;
     this.visitorCountry = this.result.country;
  
-   // fetch all likes and count
-    this.likeService.getAll().subscribe(data => {
-      this.getlike = data;
-      if (this.getlike.status === 'success') {
-        this.getlikeAll = this.getlike.data;
-        this.getlikeCount = this.getlike.count;
-        for(let getLikes of  this.getlikeAll){
-          if(getLikes.user_ip == this.ipAddress){
-             this.visitorIP = getLikes.user_ip;
-          }
+    this.fetchLikes();
+    this.fetchVisitors();
+    this.fetchTestimonials();
+  }
+
+  fetchTestimonials(): any {
+    this.testimonialsService.getData().subscribe({
+      next: data => {
+        this.getTesti = data;
+        if (this.getTesti.status === 'Failed') {
+          // console.log('true');
+          this.getTestiCount = '0';
+        }  else {
+          // console.log('false');
+          this.getTestiCount = this.getTesti.count; 
         }
+        
+      },
+      error: error => {
       }
-    }, (err) => {
-      this.getlikeCount = '0';
-    });
+    })
+  }
+  
+  
+  fetchVisitors(): any {
+    this.visitorService.getData().subscribe({
+      next: data => {
+        this.getVisitor = data;
+        if (this.getVisitor.status === 'Failed') {
+          // console.log('true');
+          this.getVisitorCount = '0';
+        }  else {
+          // console.log('false');
+          this.getVisitorCount = this.getVisitor.count; 
+        }
+        
+      },
+      error: error => {
+      }
+    })
+  }
 
-    //  fetch all visitors and count
-    this.visitorService.getAll().subscribe(data => {
-      // console.log(data);
-      this.getVisitorAll = data;
-      this.getVisitorCount = this.getVisitorAll.count; 
-    }, (err) => {
-      this.getVisitorCount = '0';
-    });
-
-    // fetch all testimoniala and count 
-    this.testimonialsService.getAll().subscribe(data => {
-      // console.log(data);
-      this.getTesti = data;
-      this.getTestiCount = this.getTesti.count; 
-    }, (err) => {
-      this.getTestiCount = '0';
-    });
+  fetchLikes(): any {
+     this.likeService.getData().subscribe({
+      next: data => {
+        this.getlike = data;
+        if (this.getlike.status === 'Failed') {
+          // console.log('true');
+          this.getlikeCount = '0';
+        }  else {
+          // console.log('false');
+          this.getlikeAll = this.getlike.data;
+          this.getlikeCount = this.getlike.count;
+          this.getlikeAll.forEach((element: any) => {
+            // console.log(element.user_ip);
+            if(element.user_ip == this.ipAddress){
+              this.visitorIP = element.user_ip;
+            }
+          });
+        }
+        
+      },
+      error: error => {
+      }
+    })
   }
 
   // add like when click like button
@@ -96,20 +129,25 @@ export class SidebarComponent implements OnInit {
       secretKey:'Stimulator1'
     };
 
-    this.likeService.create(data)
-   .subscribe((res:any) => {
-      if (res.status === 'success') {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Thank You for your likes!.',
-          icon: 'success',
-        }).then(() => {
-          this.refreshPage();
-        });
+  this.likeService.create(data)
+    .subscribe({
+      next: data => {
+        if (data.status === 'success') {
+          // console.log('true');
+          Swal.fire({
+            title: 'Success!',
+            text: 'Thank You for your likes!.',
+            icon: 'success',
+          }).then(() => {
+            this.refreshPage();
+          });
+        }  else {
+          console.log('false');
+        }
+      },
+      error: error => {
       }
-    }, (err) => {
-        console.log('ERROR');
-    });
+    })
   }
 
   // refresh page

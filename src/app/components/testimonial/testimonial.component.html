@@ -24,7 +24,23 @@
             </button><!-- end post button -->
         </div><!-- end col-md-6-->
     </div><!-- end row-->
-
+    <!-- empty testiomonial -->
+    <div class="row" *ngIf="!getAllTesti">
+        <div class="col-md-12">
+            <ul id="comments-list" class="comments-list">
+                <li>
+                    <div class="comment-main-level">
+                        <div class="comment-box">
+                            <div class="comment-content">
+                                No Testimonial Yet!
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- end of empty testiomonial -->
     <div class="row">
         <div class="col-md-12">
             <ng-template ngFor let-getAllTestimonial [ngForOf]="getAllTesti | paginate
@@ -37,16 +53,18 @@
                 <li>
                     <div class="comment-main-level">
                         <!-- comment area -->
+                        
                         <div class="comment-box">
-                            <div class="comment-head">
+                            <div class="comment-head"> 
                                 <h6 class="comment-name">{{ getAllTestimonial.name }}</h6>
-                                <span class="badge badge-info mr-2">{{ getAllTestimonial.country }}</span>
-                                <span>{{ getAllTestimonial.postedon | date:'medium' }}</span>
-                                <button class="replyLink" data-toggle="modal" [attr.data-target]="'#reply_modal' + getAllTestimonial.id" (click)="onItemSelector(getAllTestimonial.id)"><fa-icon [icon]="faMailReply"></fa-icon> Reply</button>
-                            </div>
+                                <span class="badge badge-info badge-comment mr-2 ">{{ getAllTestimonial.country }}</span>
+                                <span class="postedDate">{{ getAllTestimonial.postedon | dateAgo }}</span>
+                             </div>
                             <div class="comment-content">
                                 {{ getAllTestimonial.testimonials }}
+                                
                             </div>
+                            <div class="button-reply"><button class="replyLink" data-toggle="modal" [attr.data-target]="'#reply_modal' + getAllTestimonial.id" (click)="onItemSelector(getAllTestimonial.id)"><fa-icon [icon]="faMailReply"></fa-icon> Reply</button></div>
                         </div>
                         <!-- Reply Modal -->
                         <div class="modal fade reply-modal" id="reply_modal{{ getAllTestimonial.id }}" tabindex="-1" role="dialog">
@@ -124,7 +142,7 @@
                                 <div class="comment-head">
                                     <h6 class="comment-name replyname">{{getAllReplies.name}}</h6>
                                     <span class="badge badge-info mr-2">{{getAllReplies.country}}</span>
-                                    <span>{{ getAllReplies.postedon | date:'medium' }} </span>
+                                    <span class="postedDate">{{ getAllReplies.postedon | dateAgo }} </span>
                                 </div>
                                 <div class="comment-content">
                                     {{getAllReplies.reply}}
@@ -150,9 +168,8 @@
         >
         </pagination-controls>
       </div>
+
     <!-- Testimonial Modal -->
-    
-    
     <div class="modal fade testi-modal" id="post_button" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">

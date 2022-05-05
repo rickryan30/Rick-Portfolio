@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { map, Observable, observable, throwError } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs';
 import { Testimonials } from '../models/testimonials.model';
 
@@ -10,22 +10,32 @@ import { Testimonials } from '../models/testimonials.model';
   providedIn: 'root'
 }) 
 export class TestimonialsService {
+  status?: [] | any;
+  testimonialStatus: Testimonials;
 
-  private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/";
+  private apiURL = "https://php-jwt.cleverapps.io/";
   // private apiURL = "http://localhost/php-jwt/";
-;
 
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json'); 
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+    this.testimonialStatus = new Testimonials();
+    this.testimonialStatus.status = {"status":"Failed"};
+    this.status = this.testimonialStatus.status;
+  }
 
-
-  getAll(): Observable<Testimonials[]> {
+  getData(): Observable<Testimonials[]> {
     return this.httpClient.get<Testimonials[]>(this.apiURL + 'testimonials/get.php')
     .pipe(
-      catchError(this.errorHandler)
-    )
-  }
+        map((data:Testimonials[]) => {
+            if (data) {
+                return data;
+            } else {
+                return this.status; // Although you're stating to not want to return an empty array, in my opinion, an empty array would fit your case, since you're planning to return Observable<result[]>
+            }
+        })
+    );
+}
   
   create(data: Testimonials): Observable<Testimonials> {
     return this.httpClient.post<Testimonials>(this.apiURL + 'testimonials/insert_testimonial.php', JSON.stringify(data), { headers: this.httpHeaders})

@@ -5,4 +5,5 @@ export class Visitors {
     visited?: Number ;
     postedon?: any;
     secretKey?: any;
+    status?: any;
 }

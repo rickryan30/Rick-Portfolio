@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { VisitorComponent } from './components/visitor/visitor.component';
 import { DataTablesModule } from 'angular-datatables';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import { DataTablesModule } from 'angular-datatables';
     WorkComponent,
     TestimonialComponent,
     ContactComponent,
-    VisitorComponent
+    VisitorComponent,
+    DateAgoPipe,
+    
   ],
   imports: [
     BrowserModule,

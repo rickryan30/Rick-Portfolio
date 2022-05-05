@@ -38,17 +38,17 @@ export class TestimonialComponent implements OnInit {
   request:any;
   result: any;
 
-  getTesti:any = [];
-  getAllTesti:any = [];
-  getTestiId:any = [];
+  getTesti:any;
+  getAllTesti:any;
+  getTestiId:any;
 
-  getReply:any = [];
-  getAllReply:any = [];
-  getReplyTid:any = [];
-  getReplyName:any = [];
-  getReplyBody:any = [];
-  getReplyCountry:any = [];
-  getReplyPostedon:any = [];
+  getReply:any;
+  getAllReply:any;
+  getReplyTid:any;
+  getReplyName:any;
+  getReplyBody:any;
+  getReplyCountry:any;
+  getReplyPostedon:any;
 
   form!: FormGroup; 
   replyForm!: FormGroup; 
@@ -88,9 +88,8 @@ export class TestimonialComponent implements OnInit {
       this.tIdValue = value;
     // console.log(this.tIdValue);
     }
-   async ngOnInit(): Promise<void> {
 
-    
+   async ngOnInit(): Promise<void> {
     new navslide();
     // geolocation
     this.request = await fetch("https://ipinfo.io/json?token=1509eda3fb61e2");
@@ -100,26 +99,45 @@ export class TestimonialComponent implements OnInit {
     // console.log(this.result.ip);
 
     this.fetcTestimonials();
+    this.fetcReplies();
+}
 
-    // fetch all replies and count
-    this.repliesService.getAll().subscribe(data => {
-      // console.log(data);
+fetcReplies(): void {
+  this.repliesService.getData().subscribe({
+    next: data => {
       this.getReply = data;
-      this.getAllReply = this.getReply.data; 
-      this.getReplyTid = this.getReply.tid; 
-      // console.log(this.getReplyTid);
-    });
+      if (this.getReply.status === 'Failed') {
+        // console.log('true');
+        this.getReply.status;
+      }  else {
+        // console.log('false');
+        this.getAllReply = this.getReply.data; 
+        this.getReplyTid = this.getReply.tid; 
+      }
+      
+    },
+    error: error => {
+    }
+  })
 }
 
 fetcTestimonials(): void {
-  // fetch all testimoniala and count
-  this.testimonialsService.getAll().subscribe(data => {
-    // console.log(data);
-    this.getTesti = data;
-    this.getAllTesti = this.getTesti.data; 
-    this.getTestiId = this.getTesti.id; 
-    // console.log(this.getVisitorCount);
-  });
+  this.testimonialsService.getData().subscribe({
+    next: data => {
+      this.getTesti = data;
+      if (this.getTesti.status === 'Failed') {
+        // console.log('true');
+        this.getTesti.status
+      }  else {
+        // console.log('false');
+        this.getAllTesti = this.getTesti.data; 
+        this.getTestiId = this.getTesti.id; 
+      }
+      
+    },
+    error: error => {
+    }
+  })
 }
 
 onTableDataChange(event: any) {
@@ -155,20 +173,25 @@ get rF(){
     console.log(this.visitorCountry);
     console.log(currentDateTime);
 
-    this.testimonialsService.create(data)
-   .subscribe((res:any) => {
-      if (res.status === 'success') {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Thank You for the comment/s.',
-          icon: 'success',
-        }).then(() => {
-          this.refreshPage();
-        });
+  this.testimonialsService.create(data)
+    .subscribe({
+      next: data => {
+        if (data.status === 'success') {
+          // console.log('true');
+          Swal.fire({
+            title: 'Success!',
+            text: 'Thank You for the comment/s.',
+            icon: 'success',
+          }).then(() => {
+            this.refreshPage();
+          });
+        }  else {
+          console.log('false');
+        }
+      },
+      error: error => {
       }
-    }, (err) => {
-        console.log(err);
-    });
+    })
   } 
 
   addReplies(): any {
@@ -184,19 +207,24 @@ get rF(){
     };
 
     this.repliesService.create(data)
-    .subscribe((res:any) => {
-      if (res.status === 'success') {
-        Swal.fire({
-          title: 'Thank You!',
-          text: 'Reply has been posted.',
-          icon: 'success',
-        }).then(() => {
-          this.refreshPage();
-        });
+    .subscribe({
+      next: data => {
+        if (data.status === 'success') {
+          // console.log('true');
+          Swal.fire({
+            title: 'Success!',
+            text: 'Reply has been posted.',
+            icon: 'success',
+          }).then(() => {
+            this.refreshPage();
+          });
+        }  else {
+          console.log('false');
+        }
+      },
+      error: error => {
       }
-    }, (err) => {
-        console.log(err);
-    });
+    })
   }
 
   

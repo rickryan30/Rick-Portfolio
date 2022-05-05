@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { map, Observable, observable, throwError } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs';
 import { Replies } from '../models/replies.model';
 
@@ -9,14 +9,21 @@ import { Replies } from '../models/replies.model';
   providedIn: 'root'
 })
 export class RepliesService {
+  status?: [] | any;
+  replyStatus: Replies;
 
-  private apiURL = "https://app-27c5ca7f-862f-40d7-a88f-0bece4925628.cleverapps.io/";
+  private apiURL = "https://php-jwt.cleverapps.io/";
   // private apiURL = "http://localhost/php-jwt/";
 
-  
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    this.replyStatus = new Replies();
+    this.replyStatus.status = {"status":"Failed"};
+    this.status = this.replyStatus.status;
+  }
+
+
 find(user_ip: any): Observable<Replies> {
     return this.httpClient.get<Replies>(this.apiURL + 'testimonial-replies/get.php?user_ip=' + user_ip, { headers: this.httpHeaders})
     .pipe(
@@ -24,12 +31,18 @@ find(user_ip: any): Observable<Replies> {
     )
   }
 
-  getAll(): Observable<Replies[]> {
+  getData(): Observable<Replies[]> {
     return this.httpClient.get<Replies[]>(this.apiURL + 'testimonial-replies/get.php')
     .pipe(
-      catchError(this.errorHandler)
-    )
-  }
+        map((data:Replies[]) => {
+            if (data) {
+                return data;
+            } else {
+                return this.status; // Although you're stating to not want to return an empty array, in my opinion, an empty array would fit your case, since you're planning to return Observable<result[]>
+            }
+        })
+    );
+}
   
   create(data: Replies): Observable<Replies> {
     return this.httpClient.post<Replies>(this.apiURL + 'testimonial-replies/insert_reply.php', JSON.stringify(data), { headers: this.httpHeaders})

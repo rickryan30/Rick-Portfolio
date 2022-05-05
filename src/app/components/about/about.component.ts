@@ -6,7 +6,6 @@ import { faWrench } from '@fortawesome/free-solid-svg-icons';
 import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
 
 import { DatePipe } from '@angular/common';
-import { Visitors } from 'src/app/models/visitors.model';
 import { VisitorsService } from 'src/app/services/visitors.service';
 
 declare var navslide: any;
@@ -35,11 +34,13 @@ export class AboutComponent implements OnInit {
   getvisitorAll:any = [];
   getIp: any;
   getIpResult: any;
+  getIdResult: any;
   passUserId: any;
   getVisitedResult: any;
   passUserVisited: any;
   passCurrentIp: any;
   visitedCount: any;
+  userDate: any;
   sum: any; 
   constructor(
   public datepipe: DatePipe,
@@ -57,45 +58,60 @@ export class AboutComponent implements OnInit {
     this.visitorCountry = this.result.country;
     // console.log(this.result.country);
 
-    
-    this.visitorService.getAll().subscribe(data => {
-      this.getVisitor = data;
-      if (this.getVisitor.status === 'success') {
-        console.log("success");
-        this.getvisitorAll = this.getVisitor.data;
-        for(let getVisits of this.getvisitorAll){
-          // this.getIp = (getVisits.user_ip==this.ipAddress) ? "user_ip " + getVisits.id : "computers ip " + this.ipAddress;
-          if(getVisits.user_ip==this.ipAddress) {
+    this.fetchVisitors();
+  } 
+
+  fetchVisitors(): any {
+    let currentDateTime =this.datepipe.transform((new Date), 'MMMM d, y');
+    // let dateToday = currentDateTime | date:'medium';
+    this.visitorService.getData().subscribe({
+     next: data => {
+       this.getVisitor = data;
+       if (this.getVisitor.status === 'Failed') {
+         console.log('No Visitors Yet!');
+          this.getIpResult = this.ipAddress;
+          this.addVisitors();
+       }  else {
+        //  console.log('false about page');
+         this.getvisitorAll = this.getVisitor.data;
+         this.getvisitorAll.forEach((element: any) => {
+          //  console.log(element.user_ip);
+           if(element.user_ip == this.ipAddress){
             this.getIp  = true;
-            this.passUserId = getVisits.id;
-            this.passUserVisited = getVisits.visited;
-          }else {
+            this.passUserId = element.id;
+            this.userDate = this.datepipe.transform((element.postedon), 'MMMM d, y');
+            this.passUserVisited = element.visited;
+           } else {
             this.getIp  = false;
             this.passCurrentIp = this.ipAddress;
-          }
-        }
-        // end of for
-        if(this.getIp==true) {
-          this.getIpResult = this.passUserId;
-          this.getVisitedResult = this.passUserVisited; 
-          this.update();
-        }else {
-          this.getIpResult = this.passCurrentIp;
-          this.addVisitors();
-        }
-        // this.getIpResult = (this.getIp==true) ? this.passUserId : this.passCurrentIp;
-        // this.update();
-      } 
-    }, (err) => {
-      this.addVisitors();
-    });
-  }
+           }
+         });
+         if(this.getIp==true) {
+           if(this.userDate  == currentDateTime) {
+            console.log('Last Visited: ' + this.userDate);
+           } else {
+            // console.log('not same date');
+            this.getIdResult = this.passUserId;
+            this.getVisitedResult = this.passUserVisited; 
+            this.update();
+           }
+         } else {
+              this.getIpResult = this.passCurrentIp;
+              this.addVisitors();
+         }
+       }
+       
+     },
+     error: error => {
+     }
+   })
+ }
 
-  // add user IP when click like button
+  // update visitor
   update(): any {
     this.visitedCount = 1;
     this.sum = parseInt(this.visitedCount) + parseInt(this.getVisitedResult);
-    console.log(this.sum);
+    // console.log(this.sum);
     let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     let data = {
       visited: this.sum,
@@ -103,36 +119,44 @@ export class AboutComponent implements OnInit {
       secretKey:'Stimulator1'
     };
 
-    this.visitorService.update(this.getIpResult,data)
-   .subscribe((res:any) => {
-      if (res.status === 'success') {
-        console.log(res);
+  this.visitorService.update(this.getIdResult,data).subscribe({
+      next: data => {
+        if (data.status === 'success') {
+          // console.log('true');
+          data.status;
+        }  else {
+          console.log('false');
+        }
+       },
+      error: error => {
       }
-    }, (err) => {
-        console.log(err);
-    });
+    })
   }
 
-  // add user IP when click like button
+  // add visitor
   addVisitors(): any {
     let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     this.visitedCount = 1;
     let data = {
-      user_ip: this.ipAddress,
+      user_ip: this.getIpResult,
       country: this.visitorCountry,
       visited: this.visitedCount,
       postedon: currentDateTime,
       secretKey:'Stimulator1'
     };
 
-    this.visitorService.create(data)
-   .subscribe((res:any) => {
-      if (res.status === 'success') {
-        console.log(res);
+    this.visitorService.create(data).subscribe({
+      next: data => {
+        if (data.status === 'success') {
+          // console.log('true');
+            data.status;
+        }  else {
+          console.log('false');
+        }
+      },
+      error: error => {
       }
-    }, (err) => {
-        console.log(err);
-    });
+    })
   }
 
   birthYear: number = 1986;

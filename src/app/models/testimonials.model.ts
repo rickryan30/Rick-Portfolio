@@ -5,5 +5,6 @@ export class Testimonials {
     country?: any ;
     postedon?: any;
     secretKey?: any;
+    status?: any;
 }
  

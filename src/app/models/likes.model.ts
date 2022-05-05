@@ -4,4 +4,5 @@ export class Likes {
     country?: any ;
     postedon?: any;
     secretKey?: any;
+    status?: any;
 }

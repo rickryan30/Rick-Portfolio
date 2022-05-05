@@ -720,7 +720,7 @@ hr.testi-hr {
 
 
 .comment-main-level:after {
-	content: '';
+	content: none;
 	width: 0;
 	height: 0;
 	display: block;
@@ -755,8 +755,9 @@ hr.testi-hr {
 	border-radius: 4px 4px 0 0;
 }
 
-.comment-box .comment-head button.replyLink  {
-	float: right;
+.comment-box .button-reply button.replyLink  {
+    margin: 14px auto;
+    float: right;
     background-color: #f2aa4c;
     border-color: #f2aa4c;
     color: #373e44;
@@ -767,11 +768,11 @@ hr.testi-hr {
     font-weight: 600;
 }
 
-.comment-box .comment-head button.replyLink:hover {
+.comment-box .button-reply button.replyLink:hover {
     text-decoration: none;
-    background-color: #373e44;
-    border-color: #373e44;
-    color: #eae3d8;
+    background-color: #eae3d8;
+    border-color: #eae3d8;
+    color: #373e44;
 }
 
 .comment-box .comment-head button.replyLink:focus {
@@ -781,13 +782,17 @@ hr.testi-hr {
 
 
 .comment-box .comment-name {
-	color: #373e44;
+	color: #17a2b8;
 	font-size: 14px;
 	font-weight: 700;
 	float: left;
 	margin-right: 10px;
+  text-transform: uppercase;
 }
-
+.comment-box .badge.badge-info.badge-comment {
+  color: #fff;
+  background-color: #f2aa4c;
+}
 .comment-box .comment-name.replyname {
 	color: #f2aa4c;
 }
@@ -825,6 +830,11 @@ hr.testi-hr {
 	margin-left: 10px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+}
+
+.comment-box .comment-head span.postedDate {
+  float: right;
+  font-weight: 500;
 }
 /* end of testimonials */
 

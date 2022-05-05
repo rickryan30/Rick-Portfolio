@@ -56,16 +56,19 @@
                   <th scope="col">Country</th>
                   <th scope="col">Visited</th>
                   <th scope="col">Date</th>
-                  <th scope="col">Hour</th>
                 </tr>
               </thead>
               <tbody>
+                <!-- empty visitor -->
+                <tr *ngIf="!getVisitor">
+                  <td colspan="5">No Visitors Yet!</td>
+                </tr>
+                <!-- end of empty visitor -->
                 <tr *ngFor="let getVisit of getVisitor">
                   <td>{{ getVisit.user_ip }}</td>
                   <td>{{ getVisit.country }}</td>
                   <td>{{ getVisit.visited }}</td>
-                  <td>{{ getVisit.postedon | date:'longDate' }}</td>
-                  <td>{{ getVisit.postedon | date:'mediumTime' }}</td>
+                  <td>{{ getVisit.postedon | dateAgo }}</td>
                 </tr>
               </tbody>
             </table>
