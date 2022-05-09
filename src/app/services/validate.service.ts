@@ -4,7 +4,7 @@ import { map, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs';
 
 
-@Injectable({
+@Injectable({ 
   providedIn: 'root'
 })
 export class ValidateService {
@@ -12,10 +12,12 @@ export class ValidateService {
   private apiURL = "https://php-jwt.cleverapps.io/";
   // private apiURL = "http://localhost/php-jwt/";
 
+  httpHeaders = new HttpHeaders().set('Content-Type', 'application/json'); 
+
   constructor(private httpClient: HttpClient) { }
 
   getToken(jwt: any): Observable<any> {
-    return this.httpClient.post<any>(this.apiURL, {jwt})
+    return this.httpClient.post<any>(this.apiURL, {jwt}, { headers: this.httpHeaders})
     .pipe(
       catchError(this.errorHandler)
     )
