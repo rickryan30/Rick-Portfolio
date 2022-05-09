@@ -25,7 +25,7 @@
         </div><!-- end col-md-6-->
     </div><!-- end row-->
     <!-- empty testiomonial -->
-    <div class="row" *ngIf="!getAllTesti">
+    <div class="row" *ngIf="!getTestiResult">
         <div class="col-md-12">
             <ul id="comments-list" class="comments-list">
                 <li>
@@ -43,7 +43,7 @@
     <!-- end of empty testiomonial -->
     <div class="row">
         <div class="col-md-12">
-            <ng-template ngFor let-getAllTestimonial [ngForOf]="getAllTesti | paginate
+            <ng-template ngFor let-getAllTestimonial [ngForOf]="getTestiResult | paginate
             : {
                 itemsPerPage: tableSize,
                 currentPage: page,
@@ -136,7 +136,7 @@
                     </div>
                     <!-- Reply area -->
                     <ul class="comments-list reply-list">
-                        <li *ngFor="let getAllReplies of getAllReply">
+                        <li *ngFor="let getAllReplies of getReplyResult">
                             <!-- reply box-->
                             <div class="comment-box" *ngIf="getAllReplies.tid == getAllTestimonial.id ">
                                 <div class="comment-head">

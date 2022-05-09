@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { TestimonialsService } from 'src/app/services/testimonials.service';
 import { RepliesService } from 'src/app/services/replies.service';
 import { DatePipe } from '@angular/common';
@@ -14,6 +15,7 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faLocation } from '@fortawesome/free-solid-svg-icons';
 import { Testimonials } from 'src/app/models/testimonials.model';
 import { faMailReply } from '@fortawesome/free-solid-svg-icons';
+import { ValidateService } from 'src/app/services/validate.service';
 
 declare var navslide: any;
 
@@ -50,6 +52,14 @@ export class TestimonialComponent implements OnInit {
   getReplyCountry:any;
   getReplyPostedon:any;
 
+  getTestiToken: any
+  getTestiAll: any;
+  getTestiResult: any;
+
+  getReplyToken: any
+  getReplyAll: any;
+  getReplyResult: any;
+  
   form!: FormGroup; 
   replyForm!: FormGroup; 
 
@@ -59,7 +69,7 @@ export class TestimonialComponent implements OnInit {
   tableSizes: any = [2, 8, 12, 16];
   
   tIdValue: any;
-
+  sKeyencoded: string = btoa("Stimul@t0r");
   testimonials: Testimonials = {
     name: '',
     testimonials: '', 
@@ -71,7 +81,11 @@ export class TestimonialComponent implements OnInit {
     private testimonialsService: TestimonialsService,
     public repliesService: RepliesService,
     private formBuilder: FormBuilder,
-    public datepipe: DatePipe) { 
+    private ngZone: NgZone,
+    private router: Router,
+    public datepipe: DatePipe,
+    public ValidateService: ValidateService
+    ) { 
       
       this.form = this.formBuilder.group({
         name: ['', Validators.required],
@@ -108,11 +122,19 @@ fetcReplies(): void {
       this.getReply = data;
       if (this.getReply.status === 'Failed') {
         // console.log('true');
-        this.getReply.status;
+        this.getReply.status ;
       }  else {
-        // console.log('false');
-        this.getAllReply = this.getReply.data; 
-        this.getReplyTid = this.getReply.tid; 
+        // console.log('false')
+        this.getReplyToken = this.getReply.access_token;
+          this.ValidateService.getToken(this.getReplyToken).subscribe({
+            next: data => {;
+              this.getReplyAll = data;
+              this.getReplyResult = this.getReplyAll.data;
+              this.getReplyTid = this.getReplyResult.id; 
+            },
+            error: error => {
+            }
+          })
       }
       
     },
@@ -121,23 +143,31 @@ fetcReplies(): void {
   })
 }
 
-fetcTestimonials(): void {
+fetcTestimonials(): any {
   this.testimonialsService.getData().subscribe({
-    next: data => {
-      this.getTesti = data;
-      if (this.getTesti.status === 'Failed') {
-        // console.log('true');
-        this.getTesti.status
-      }  else {
-        // console.log('false');
-        this.getAllTesti = this.getTesti.data; 
-        this.getTestiId = this.getTesti.id; 
-      }
-      
-    },
-    error: error => {
-    }
-  })
+   next: data => {
+     this.getTesti = data;
+     if (this.getTesti.status === 'Failed') {
+       // console.log('true');
+       this.getTesti.status ;
+     }  else {
+       // console.log('false')
+       this.getTestiToken = this.getTesti.access_token;
+         this.ValidateService.getToken(this.getTestiToken).subscribe({
+           next: data => {;
+             this.getTestiAll = data;
+             this.getTestiResult = this.getTestiAll.data;
+             this.getTestiId = this.getTestiResult.id; 
+           },
+           error: error => {
+           }
+         })
+     }
+     
+   },
+   error: error => {
+   }
+ })
 }
 
 onTableDataChange(event: any) {
@@ -165,13 +195,13 @@ get rF(){
       testimonials: this.form.value.testimonials,
       country: this.visitorCountry,
       postedon: currentDateTime,
-      secretKey:'Stimulator1'
+      secretKey:this.sKeyencoded
     }
 
-    console.log(this.form.value.name);
-    console.log(this.form.value.testimonials);
-    console.log(this.visitorCountry);
-    console.log(currentDateTime);
+    // console.log(this.form.value.name);
+    // console.log(this.form.value.testimonials);
+    // console.log(this.visitorCountry);
+    // console.log(currentDateTime);
 
   this.testimonialsService.create(data)
     .subscribe({
@@ -203,7 +233,7 @@ get rF(){
       reply: this.replyForm.value.reply,
       country: this.visitorCountry,
       postedon: currentDateTime,
-      secretKey:'Stimulator1'
+      secretKey:this.sKeyencoded
     };
 
     this.repliesService.create(data)
