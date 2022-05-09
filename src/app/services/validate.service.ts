@@ -9,15 +9,13 @@ import { catchError } from 'rxjs';
 })
 export class ValidateService {
 
-  private apiURL = "https://php-jwt.cleverapps.io/";
-  // private apiURL = "http://localhost/php-jwt/";
-
-  httpHeaders = new HttpHeaders().set('Content-Type', 'application/json'); 
+  private apiURL = "https://php-jwt.cleverapps.io/validate_token.php";
+  // private apiURL = "http://localhost/php-jwt/validate_token.php";
 
   constructor(private httpClient: HttpClient) { }
 
   getToken(jwt: any): Observable<any> {
-    return this.httpClient.post<any>(this.apiURL, {jwt}, { headers: this.httpHeaders})
+    return this.httpClient.post<any>(this.apiURL, {jwt})
     .pipe(
       catchError(this.errorHandler)
     )
