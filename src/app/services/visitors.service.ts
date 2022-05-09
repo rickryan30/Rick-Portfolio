@@ -33,9 +33,9 @@ export class VisitorsService {
               return this.status; // Although you're stating to not want to return an empty array, in my opinion, an empty array would fit your case, since you're planning to return Observable<result[]>
           }
       })
-    );
+    ); 
   }
-
+ 
   getData(): Observable<Visitors[]> {
     return this.httpClient.get<Visitors[]>(this.apiURL + 'visitors/get.php')
     .pipe(

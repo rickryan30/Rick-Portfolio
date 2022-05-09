@@ -17,7 +17,7 @@
             </div><!-- end d-flex flex-row-reverse-->
       </div><!-- end col-md-6-->
         <div class="col-md-12 visible-phone d-none">
-            <ng-template ngFor let-getVisitMobile [ngForOf]="getVisitorMobile | paginate
+            <ng-template ngFor let-getVisitMobile [ngForOf]="getResultMobile | paginate
             : {
               id: 'mobilePagination',
                 itemsPerPage: tableSize,
@@ -32,7 +32,7 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Country<span> {{ getVisitMobile.country }}</span></li>
                 <li class="list-group-item">Visited <span> {{ getVisitMobile.visited }}</span></li>
-                <li class="list-group-item">Date and Time <span> {{ getVisitMobile.postedon | date:'medium' }}</span></li>
+                <li class="list-group-item">Date and Time <span> {{ getVisitMobile.postedon | dateAgo }}</span></li>
               </ul>
             </div>
 
@@ -64,7 +64,7 @@
                   <td colspan="5">No Visitors Yet!</td>
                 </tr>
                 <!-- end of empty visitor -->
-                <tr *ngFor="let getVisit of getVisitor">
+                <tr *ngFor="let getVisit of getResult">
                   <td>{{ getVisit.user_ip }}</td>
                   <td>{{ getVisit.country }}</td>
                   <td>{{ getVisit.visited }}</td>

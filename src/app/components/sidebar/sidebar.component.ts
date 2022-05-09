@@ -5,6 +5,7 @@ import { faComments } from '@fortawesome/free-regular-svg-icons';
 import { LikesService } from 'src/app/services/likes.service';
 import { DatePipe } from '@angular/common';
 import { VisitorsService } from 'src/app/services/visitors.service';
+import { ValidateService } from 'src/app/services/validate.service';
 import { TestimonialsService } from 'src/app/services/testimonials.service';
 import Swal from 'sweetalert2';
 
@@ -32,17 +33,36 @@ export class SidebarComponent implements OnInit {
   getlikeCount:any = [];
 
   getVisitor:any = [];
-  getVisitorAll:any = [];
   getVisitorCount:any = [];
   getTesti:any = [];
   getTestiCount:any = [];
+  getLikeToken:any;
+  getVisitorToken:any;
+  getResult: any
+  getVisitorResult: any
+  getIpResult: any;
+  getvisitorAll:any = [];
+  getIp: any;
+  passUserId: any;
+  userDate: any;
+  passUserVisited: any;
+  passCurrentIp: any;
+  getIdResult: any;
+  getVisitedResult: any;
+  visitedCount: any;
+  sum: any; 
   // element: any;
+  // SKey: any = 'Stimulator1';
+  // sKeydecoded: string = atob("U3RpbXVsYXRvcjE=")
+  
+  sKeyencoded: string = btoa("Stimul@t0r");
 
   constructor(
   public likeService: LikesService,
   public testimonialsService: TestimonialsService,
   public datepipe: DatePipe,
-  public visitorService: VisitorsService
+  public visitorService: VisitorsService,
+  public ValidateService: ValidateService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -51,7 +71,7 @@ export class SidebarComponent implements OnInit {
     this.result = await this.request.json();
     this.ipAddress = this.result.ip;
     this.visitorCountry = this.result.country;
- 
+    // console.log(this.sKeyencoded)?
     this.fetchLikes();
     this.fetchVisitors();
     this.fetchTestimonials();
@@ -75,24 +95,60 @@ export class SidebarComponent implements OnInit {
     })
   }
   
-  
   fetchVisitors(): any {
+    let currentDateTime =this.datepipe.transform((new Date), 'MMMM d, y');
+    // let dateToday = currentDateTime | date:'medium';
     this.visitorService.getData().subscribe({
-      next: data => {
-        this.getVisitor = data;
-        if (this.getVisitor.status === 'Failed') {
-          // console.log('true');
+     next: data => {
+       this.getVisitor = data;
+       if (this.getVisitor.status === 'Failed') {
           this.getVisitorCount = '0';
-        }  else {
-          // console.log('false');
-          this.getVisitorCount = this.getVisitor.count; 
-        }
-        
+         console.log('No Visitors Yet!');
+          this.getIpResult = this.ipAddress;
+          this.addVisitors();
+       }  else {
+        //  console.log('false about page');
+        this.getVisitorCount = this.getVisitor.count; 
+        this.getVisitorToken = this.getVisitor.access_token;
+        this.ValidateService.getToken(this.getVisitorToken).subscribe({
+          next: data => {;
+            this.getvisitorAll = data;
+            this.getVisitorResult = this.getvisitorAll.data;
+            this.getVisitorResult.forEach((element: any) => {
+              // console.log(element.user_ip);
+              if(element.user_ip == this.ipAddress){
+                this.getIp  = true;
+                this.passUserId = element.id;
+                this.userDate = this.datepipe.transform((element.postedon), 'MMMM d, y');
+                this.passUserVisited = element.visited;
+               } else {
+                this.getIp  = false;
+                this.passCurrentIp = this.ipAddress;
+               }
+            });
+            if(this.getIp==true) {
+              if(this.userDate  == currentDateTime) {
+               console.log('Last Visited: ' + this.userDate);
+              } else {
+               // console.log('not same date');
+               this.getIdResult = this.passUserId;
+               this.getVisitedResult = this.passUserVisited; 
+               this.update();
+              }
+            } else {
+                 this.getIpResult = this.passCurrentIp;
+                 this.addVisitors();
+            }
+          },
+          error: error => {
+          }
+        })
+       }
       },
-      error: error => {
-      }
-    })
-  }
+     error: error => {
+     }
+   })
+ }
 
   fetchLikes(): any {
      this.likeService.getData().subscribe({
@@ -102,15 +158,23 @@ export class SidebarComponent implements OnInit {
           // console.log('true');
           this.getlikeCount = '0';
         }  else {
-          // console.log('false');
-          this.getlikeAll = this.getlike.data;
+          // console.log('false')
           this.getlikeCount = this.getlike.count;
-          this.getlikeAll.forEach((element: any) => {
-            // console.log(element.user_ip);
-            if(element.user_ip == this.ipAddress){
-              this.visitorIP = element.user_ip;
-            }
-          });
+          this.getLikeToken = this.getlike.access_token;
+            this.ValidateService.getToken(this.getLikeToken).subscribe({
+              next: data => {;
+                this.getlikeAll = data;
+                this.getResult = this.getlikeAll.data;
+                this.getResult.forEach((element: any) => {
+                  // console.log(element.user_ip);
+                  if(element.user_ip == this.ipAddress){
+                    this.visitorIP = element.user_ip;
+                  }
+                });
+              },
+              error: error => {
+              }
+            })
         }
         
       },
@@ -126,7 +190,7 @@ export class SidebarComponent implements OnInit {
       user_ip: this.ipAddress,
       country: this.visitorCountry,
       postedon: currentDateTime,
-      secretKey:'Stimulator1'
+      secretKey:this.sKeyencoded
     };
 
   this.likeService.create(data)
@@ -141,6 +205,58 @@ export class SidebarComponent implements OnInit {
           }).then(() => {
             this.refreshPage();
           });
+        }  else {
+          console.log('false');
+        }
+      },
+      error: error => {
+      }
+    })
+  }
+
+   // update visitor
+   update(): any {
+    this.visitedCount = 1;
+    this.sum = parseInt(this.visitedCount) + parseInt(this.getVisitedResult);
+    // console.log(this.sum);
+    let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss', 'en-PH');
+    let data = {
+      visited: this.sum,
+      postedon: currentDateTime,
+      secretKey:this.sKeyencoded
+    };
+
+  this.visitorService.update(this.getIdResult,data).subscribe({
+      next: data => {
+        if (data.status === 'success') {
+          // console.log('true');
+          data.status;
+        }  else {
+          console.log('false');
+        }
+       },
+      error: error => {
+      }
+    })
+  }
+
+  // add visitor
+  addVisitors(): any {
+    let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss', 'en-PH');
+    this.visitedCount = 1;
+    let data = {
+      user_ip: this.getIpResult,
+      country: this.visitorCountry,
+      visited: this.visitedCount,
+      postedon: currentDateTime,
+      secretKey:this.sKeyencoded
+    };
+
+    this.visitorService.create(data).subscribe({
+      next: data => {
+        if (data.status === 'success') {
+          // console.log('true');
+            data.status;
         }  else {
           console.log('false');
         }
