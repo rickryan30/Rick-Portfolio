@@ -7,7 +7,6 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { TestimonialComponent } from './components/testimonial/testimonial.component';
 import { WorkComponent } from './components/work/work.component';
 import { VisitorComponent } from './components/visitor/visitor.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'about-me' },
@@ -16,8 +15,7 @@ const routes: Routes = [
   { path: 'gallery', component: GalleryComponent },
   { path: 'testimonials', component: TestimonialComponent },
   { path: 'works', component: WorkComponent },
-  { path: 'visitors', component: VisitorComponent },
-  // { path: 'sidebar', component: SidebarComponent }
+  { path: 'visitors', component: VisitorComponent }
 ];
 
 @NgModule({

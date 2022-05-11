@@ -130,7 +130,7 @@ export class SidebarComponent implements OnInit {
                }
             });
             if(this.getIp==true) {
-              if(this.userDate  == currentDateTime) {
+              if(this.userDate == currentDateTime) {
                console.log('Last Visited: ' + this.userDate);
               } else {
                // console.log('not same date');

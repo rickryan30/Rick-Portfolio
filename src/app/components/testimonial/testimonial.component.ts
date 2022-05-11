@@ -59,7 +59,7 @@ export class TestimonialComponent implements OnInit {
   getTestiAll: any;
   getTestiResult: any;
 
-  getReplyToken: any
+  getReplyToken: any 
   getReplyAll: any;
   getReplyResult: any;
   
