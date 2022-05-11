@@ -126,7 +126,6 @@ export class SidebarComponent implements OnInit {
                 this.passUserVisited = element.visited;
                } else {
                 this.getIp  = false;
-                this.passCurrentIp = this.ipAddress;
                }
             });
             if(this.getIp==true) {
@@ -139,7 +138,7 @@ export class SidebarComponent implements OnInit {
                this.update();
               }
             } else {
-                 this.getIpResult = this.passCurrentIp;
+                 this.getIpResult = this.ipAddress;
                  this.addVisitors();
             }
           },
