@@ -218,7 +218,7 @@ export class SidebarComponent implements OnInit {
     this.visitedCount = 1;
     this.sum = parseInt(this.visitedCount) + parseInt(this.getVisitedResult);
     // console.log(this.sum);
-    let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss', 'en-PH');
+    let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     let data = {
       visited: this.sum,
       postedon: currentDateTime,
@@ -241,7 +241,7 @@ export class SidebarComponent implements OnInit {
 
   // add visitor 
   addVisitors() {
-    let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss', 'en-PH');
+    let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     this.visitedCount = 1;
     let data = {
       user_ip: this.getIpResult,
