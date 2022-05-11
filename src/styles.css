@@ -476,6 +476,82 @@ button.btn.btn-danger.btn-reply-override:focus {
 /* end of footer*/
 
 /* testimonials */
+.testi-form {
+  border: 1px solid #373e44;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  padding: 10px;
+  background-color: #eae3d8;
+  filter: drop-shadow(3px 2px 3px #00080e);
+  box-shadow: 2px 2px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.button-reply {
+  float: right;
+  margin: 12px auto;
+}
+
+.col-md-12.button-reply.text-right button {
+  background-color: #17a2b8;
+    border: 1px solid #17a2b8;
+}
+
+.col-md-12.button-reply.text-right button.btn-primary.focus, .col-md-12.button-reply.text-right button.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgb(55 62 68);
+}
+
+.col-md-12.button-reply.text-right button.btn-primary:not(:disabled):not(.disabled).active, .col-md-12.button-reply.text-right button.btn-primary:not(:disabled):not(.disabled):active, .col-md-12.button-reply.text-right button.show>.btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #f2aa4c;
+  border-color: #373e44;
+}
+
+.col-md-12.button-reply.text-right button:hover {
+  background-color: #eae3d8;
+  border: 1px solid #eae3d8;
+  color: #373e44;
+}
+
+.button-post button.savebtn {
+  background-color: #f2aa4c;
+  border: 1px solid #eae3d8;
+  color: #373e44;
+}
+
+.button-post button.btn-primary.savebtn.focus, .button-post button.btn-primary.savebtn:focus {
+  box-shadow: 0 0 0 0.2rem rgb(234 227 216);
+}
+
+.button-post button.btn-primary.savebtn:not(:disabled):not(.disabled).active, .button-post button.btn-primary.savebtn:not(:disabled):not(.disabled):active, .button-post button.show>.btn-primary.savebtn.dropdown-toggle {
+  color: #373e44;
+  background-color: #f2aa4c;
+  border-color: #eae3d8;
+}
+
+.button-post button.savebtn:hover {
+  background-color: #f2aa4c;
+  border: 1px solid #f2aa4c;
+  color: #ffffff;
+}
+
+.button-post .btn-primary.savebtn.disabled, .btn-primary.savebtn:disabled {
+  color: #373e44;
+}
+
+.replyCollapse .card {
+  background-color: #eae3d8;
+  padding: 10px;
+}
+
+.d-flex.justify-content-start.commentName h5 {
+  color: #17a2b8;
+  font-size: 15px;
+}
+
+.d-flex.justify-content-start.commentName h5 span {
+  color: #373e44;
+  text-transform: uppercase;
+}
 
 .input-group-prepend.override-input-prepend fa-icon.fuser {
     padding: 7px 0;
@@ -554,6 +630,7 @@ select.custom-select.select-pagi {
   background-color: #eae3d8;
   color: #373e44;
   font-weight: 600;
+  width: auto;
 }
 
 .pagi-numbers li {
@@ -694,11 +771,26 @@ hr.testi-hr {
 
 .comments-list {
 	padding-left: 0;
-    margin-top: 30px;
+  padding: 12px 12px 0 12px;
+}
+
+ul.testi-list {
+	background-color: #d6d9dc;
+  border: 1px solid #d6d9dc;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px 0 rgb(0 0 0 / 20%);
+}
+
+ul.testi-list:nth-child(odd)
+{
+  background-color: #505961;
+  border: 1px solid #505961;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px 0 rgb(0 0 0 / 20%);
 }
 
 .comments-list li {
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	display: block;
 	position: relative;
 }
@@ -711,12 +803,10 @@ hr.testi-hr {
 	width: 0;
 }
 
-.reply-list {
+/* .reply-list {
 	padding-left: 88px;
 	clear: both;
-	margin-top: 15px;
-    border-bottom: 2px solid #a38550;
-}
+} */
 
 
 .comment-main-level:after {

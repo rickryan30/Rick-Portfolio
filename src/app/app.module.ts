@@ -17,6 +17,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { VisitorComponent } from './components/visitor/visitor.component';
 import { DataTablesModule } from 'angular-datatables';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -28,8 +30,7 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
     TestimonialComponent,
     ContactComponent,
     VisitorComponent,
-    DateAgoPipe,
-    
+    DateAgoPipe
   ],
   imports: [
     BrowserModule,
@@ -39,7 +40,9 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    DataTablesModule
+    DataTablesModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

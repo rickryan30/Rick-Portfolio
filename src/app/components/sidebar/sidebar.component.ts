@@ -1,5 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import { Router } from '@angular/router';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faComments } from '@fortawesome/free-regular-svg-icons';
 import { LikesService } from 'src/app/services/likes.service';
@@ -8,7 +9,7 @@ import { VisitorsService } from 'src/app/services/visitors.service';
 import { ValidateService } from 'src/app/services/validate.service';
 import { TestimonialsService } from 'src/app/services/testimonials.service';
 import Swal from 'sweetalert2';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({ 
   selector: 'app-sidebar',
@@ -56,13 +57,15 @@ export class SidebarComponent implements OnInit {
   // sKeydecoded: string = atob("U3RpbXVsYXRvcjE=")
   
   sKeyencoded: string = btoa("Stimul@t0r");
-
+  
   constructor(
   public likeService: LikesService,
   public testimonialsService: TestimonialsService,
   public datepipe: DatePipe,
   public visitorService: VisitorsService,
-  public ValidateService: ValidateService
+  public ValidateService: ValidateService,
+  private router: Router,
+  private toastr: ToastrService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -111,7 +114,7 @@ export class SidebarComponent implements OnInit {
         this.getVisitorCount = this.getVisitor.count; 
         this.getVisitorToken = this.getVisitor.access_token;
         this.ValidateService.getToken(this.getVisitorToken).subscribe({
-          next: data => {;
+          next: data => {
             this.getvisitorAll = data;
             this.getVisitorResult = this.getvisitorAll.data;
             this.getVisitorResult.forEach((element: any) => {
@@ -184,7 +187,7 @@ export class SidebarComponent implements OnInit {
   }
 
   // add like when click like button
-  likeMe(): any {
+  likeMe() {
     let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     let data = {
       user_ip: this.ipAddress,
@@ -197,14 +200,10 @@ export class SidebarComponent implements OnInit {
     .subscribe({
       next: data => {
         if (data.status === 'success') {
-          // console.log('true');
-          Swal.fire({
-            title: 'Success!',
-            text: 'Thank You for your likes!.',
-            icon: 'success',
-          }).then(() => {
-            this.refreshPage();
-          });
+          this.toastr.success("Thank You for Liking!", "SUCCESS", {timeOut: 900})
+          .onHidden.subscribe(() => {
+            this.reloadCurrentRoute();
+          })
         }  else {
           console.log('false');
         }
@@ -230,7 +229,7 @@ export class SidebarComponent implements OnInit {
       next: data => {
         if (data.status === 'success') {
           // console.log('true');
-          data.status;
+          this.reloadCurrentRoute();
         }  else {
           console.log('false');
         }
@@ -240,7 +239,7 @@ export class SidebarComponent implements OnInit {
     })
   }
 
-  // add visitor
+  // add visitor 
   addVisitors(): any {
     let currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss', 'en-PH');
     this.visitedCount = 1;
@@ -256,7 +255,7 @@ export class SidebarComponent implements OnInit {
       next: data => {
         if (data.status === 'success') {
           // console.log('true');
-            data.status;
+          this.reloadCurrentRoute();
         }  else {
           console.log('false');
         }
@@ -267,8 +266,11 @@ export class SidebarComponent implements OnInit {
   }
 
   // refresh page
-  refreshPage() {
-    window.location.reload();
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl(currentUrl, {skipLocationChange: true}).then(() => {
+      window.location.reload();
+    });
   }
 
 }

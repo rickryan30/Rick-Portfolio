@@ -7,9 +7,11 @@ import Swal from 'sweetalert2';
 import { faComments } from '@fortawesome/free-regular-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 declare var navslide: any;
-
+ 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -22,7 +24,7 @@ export class ContactComponent implements OnInit {
   faUser = faUser;
   faComments = faComments;
   faCommentAlt = faCommentAlt;
-
+  getResponse: any;
   sendmailForm!: FormGroup;
   name: FormControl = new FormControl("", [Validators.required]);
   email: FormControl = new FormControl("", [Validators.required, Validators.email]);
@@ -32,7 +34,9 @@ export class ContactComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private router: Router,
     ) {
       this.sendmailForm = this.formBuilder.group({
         name: this.name,
@@ -56,34 +60,35 @@ export class ContactComponent implements OnInit {
         formData.append("name", this.sendmailForm.value.name);
         formData.append("email", this.sendmailForm.value.email);
         formData.append("message", this.sendmailForm.value.message);
-        this.http.post("https://script.google.com/macros/s/AKfycbxQZAfHTl_bPjc_4P730SukmK3nKj7dOZTDm8lKYC4hzo8jjegfysy49oNl5l4XbJp33w/exec", formData).subscribe(
-          (response:any) => {
-            if (response["result"] == "success") {
-              Swal.fire({
-                title: 'Success!',
-                text: "Thanks for the message " + this.sendmailForm.value.name + " I'll get back to you soon!",
-                icon: 'success',
-              }).then(() => {
-                window.location.reload();
-              });
+        this.http.post("https://script.google.com/macros/s/AKfycbxQZAfHTl_bPjc_4P730SukmK3nKj7dOZTDm8lKYC4hzo8jjegfysy49oNl5l4XbJp33w/exec", formData)
+       .subscribe({
+          next: response => {
+            this.getResponse = response;
+            if (this.getResponse.result) {
+              this.toastr.success("Thanks for the message " + this.sendmailForm.value.name + " I'll get back to you soon!", "SUCCESS", {timeOut: 900})
+              .onHidden.subscribe(() => {
+                this.reloadCurrentRoute();
+              })
             } else {
-              Swal.fire({
-                title: 'Sorry!',
-                text: 'Oops! Something went wrong... Reload the page and try again.',
-                icon: 'warning',
-              }).then(() => {
-                window.location.reload();
-              });
+              this.toastr.warning("Oops! Something went wrong... Reload the page and try again.", "WARNING", {timeOut: 900})
+              .onHidden.subscribe(() => {
+                this.reloadCurrentRoute();
+              })
             }
             this.sendmailForm.enable(); // re enable the form after a success
             console.log(response);
           },
-          (error) => {
-            this.responseMessage = "Oops! An error occurred... Reload the page and try again.";
-            this.sendmailForm.enable(); 
-            console.log(error);
+          error: error => {
           }
-        );
+        })
       }
     }
+
+    reloadCurrentRoute() {
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate([currentUrl]);
+      });
+  }
+  
   }

@@ -1,10 +1,11 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TestimonialsService } from 'src/app/services/testimonials.service';
 import { RepliesService } from 'src/app/services/replies.service';
 import { DatePipe } from '@angular/common';
 import { FormGroup, Validators, FormBuilder} from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 import { faComments } from '@fortawesome/free-regular-svg-icons';
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
@@ -24,8 +25,10 @@ declare var navslide: any;
   templateUrl: './testimonial.component.html',
   styleUrls: ['./testimonial.component.css']
 })
-export class TestimonialComponent implements OnInit {
 
+export class TestimonialComponent implements OnInit {
+  // @ViewChild('closebutton') closebutton: { nativeElement: { click: () => void; }; } | any;
+  
   faComments = faComments;
   faCommentAlt = faCommentAlt;
   faUser = faUser;
@@ -81,10 +84,11 @@ export class TestimonialComponent implements OnInit {
     private testimonialsService: TestimonialsService,
     public repliesService: RepliesService,
     private formBuilder: FormBuilder,
-    private ngZone: NgZone,
     private router: Router,
+    private ngZone: NgZone,
     public datepipe: DatePipe,
-    public ValidateService: ValidateService
+    public ValidateService: ValidateService,
+    private toastr: ToastrService
     ) { 
       
       this.form = this.formBuilder.group({
@@ -188,7 +192,7 @@ get rF(){
   return this.replyForm.controls;
 }
 
-  addTesti(): any {
+  addTesti() {
     var currentDateTime =this.datepipe.transform((new Date), 'yyyy-MM-dd h:mm:ss');
     var data = {
       name: this.form.value.name,
@@ -197,7 +201,6 @@ get rF(){
       postedon: currentDateTime,
       secretKey:this.sKeyencoded
     }
-
     // console.log(this.form.value.name);
     // console.log(this.form.value.testimonials);
     // console.log(this.visitorCountry);
@@ -208,14 +211,11 @@ get rF(){
       next: data => {
         if (data.status === 'success') {
           // console.log('true');
-          Swal.fire({
-            title: 'Success!',
-            text: 'Thank You for the comment/s.',
-            icon: 'success',
-          }).then(() => {
-            this.refreshPage();
-          });
-        }  else {
+          this.toastr.success("Testimonial has been Posted!", "SUCCESS", {timeOut: 900})
+          .onHidden.subscribe(() => {
+            this.reloadCurrentRoute();
+          })
+          }  else {
           console.log('false');
         }
       },
@@ -223,6 +223,7 @@ get rF(){
       }
     })
   } 
+
 
   addReplies(): any {
     // console.log(this.tIdValue);
@@ -240,14 +241,10 @@ get rF(){
     .subscribe({
       next: data => {
         if (data.status === 'success') {
-          // console.log('true');
-          Swal.fire({
-            title: 'Success!',
-            text: 'Reply has been posted.',
-            icon: 'success',
-          }).then(() => {
-            this.refreshPage();
-          });
+          this.toastr.success("Reply has been Posted!", "SUCCESS", {timeOut: 900})
+          .onHidden.subscribe(() => {
+            this.reloadCurrentRoute();
+          })
         }  else {
           console.log('false');
         }
@@ -257,12 +254,12 @@ get rF(){
     })
   }
 
-  
-  // refresh page
-  refreshPage() {
-    window.location.reload();
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl(currentUrl, {skipLocationChange: true}).then(() => {
+      window.location.reload();
+    });
   }
-
 
 }
 

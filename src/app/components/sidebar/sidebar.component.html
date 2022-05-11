@@ -7,7 +7,7 @@
             <div class="row text-center">
                 <div class="col-sm-12 col-md-12"  >
                     <!-- like button -->
-                    <button routerLink="/about-me" (click)="likeMe()"class="btn btn-default btn-md btn-like" [disabled]="this.visitorIP ?? null">
+                    <button (click)="likeMe()"class="btn btn-default btn-md btn-like" [disabled]="this.visitorIP ?? null">
                     <fa-icon [icon]="faThumbsUp"></fa-icon>&nbsp;&nbsp;&nbsp;LIKE ME
                     </button>
                     <!-- end like button -->
@@ -41,7 +41,7 @@
                <div class="row">
                     <div class="col-md-7 col-sm-7 col-xs-7">
                         <span class="category-list">
-                        <a href="visitors"><fa-icon [icon]="faUsers"></fa-icon>&nbsp;&nbsp;VISITORS</a>
+                        <a routerLinkActive="active" routerLink="visitors"><fa-icon [icon]="faUsers"></fa-icon>&nbsp;&nbsp;VISITORS</a>
                         </span>
                     </div>
 
