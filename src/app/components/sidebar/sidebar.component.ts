@@ -76,7 +76,6 @@ export class SidebarComponent implements OnInit {
     this.visitorCountry = this.result.country;
     // console.log(this.sKeyencoded)?
     this.fetchLikes();
-    this.fetchVisitorsIP();
     this.fetchVisitors();
     this.fetchTestimonials();
   }
@@ -107,10 +106,13 @@ export class SidebarComponent implements OnInit {
       //  console.log(this.getVisitor);
        if (this.getVisitor.status === 'Failed') {
           this.getVisitorCount = '0';
+          this.getIpResult = this.ipAddress;
+          this.addVisitors();
         //  console.log('No Visitors Yet!');
        }  else {
         //  console.log('fetch visitors');
         this.getVisitorCount = this.getVisitor.count; 
+        this.fetchVisitorsIP();
        }
       },
      error: error => {
@@ -123,11 +125,6 @@ fetchVisitorsIP(): any {
      this.visitorService.find(this.ipAddress).subscribe({
       next: data => {
         this.getVisitor = data;
-        if (this.getVisitor.status === 'Failed') {
-          console.log(this.getVisitor.status)
-          this.getIpResult = this.ipAddress;
-          this.addVisitors();
-        }  else { 
           this.getVisitorToken = this.getVisitor.access_token;
           this.ValidateService.getToken(this.getVisitorToken).subscribe({
           next: data => {
@@ -154,7 +151,6 @@ fetchVisitorsIP(): any {
           error: error => {
           }
         })
-        }
         
       },
       error: error => {
