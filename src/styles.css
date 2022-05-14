@@ -2534,6 +2534,10 @@ div.ps-toolbar-play div.ps-toolbar-content
   .col-md-12.visible-phone.d-none {
       display: block !important;
   }
+
+  .col-md-6.visible-phone.d-none {
+      display: block !important;
+  }
   .header-banner {
     background-image: none;
     background-color:#f2aa4c;

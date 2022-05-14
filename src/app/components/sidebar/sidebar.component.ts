@@ -34,7 +34,7 @@ export class SidebarComponent implements OnInit {
   getlikeCount:any = [];
 
   getVisitor:any = [];
-  getVisitorCount:any = [];
+  getVisitorCount:any;
   getTesti:any = [];
   getTestiCount:any = [];
   getLikeToken:any;
@@ -76,6 +76,7 @@ export class SidebarComponent implements OnInit {
     this.visitorCountry = this.result.country;
     // console.log(this.sKeyencoded)?
     this.fetchLikes();
+    this.fetchVisitorsIP();
     this.fetchVisitors();
     this.fetchTestimonials();
   }
@@ -99,52 +100,17 @@ export class SidebarComponent implements OnInit {
   }
   
   fetchVisitors(): any {
-    let currentDateTime =this.datepipe.transform((new Date), 'MMMM d, y');
     // let dateToday = currentDateTime | date:'medium';
     this.visitorService.getData().subscribe({
      next: data => {
        this.getVisitor = data;
+      //  console.log(this.getVisitor);
        if (this.getVisitor.status === 'Failed') {
           this.getVisitorCount = '0';
-         console.log('No Visitors Yet!');
-          this.getIpResult = this.ipAddress;
-          this.addVisitors();
+        //  console.log('No Visitors Yet!');
        }  else {
-        //  console.log('false about page');
+        //  console.log('fetch visitors');
         this.getVisitorCount = this.getVisitor.count; 
-        this.getVisitorToken = this.getVisitor.access_token;
-        this.ValidateService.getToken(this.getVisitorToken).subscribe({
-          next: data => {
-            this.getvisitorAll = data;
-            this.getVisitorResult = this.getvisitorAll.data;
-            this.getVisitorResult.forEach((element: any) => {
-              // console.log(element.user_ip);
-              if(element.user_ip == this.ipAddress){
-                this.getIp  = true;
-                this.passUserId = element.id;
-                this.userDate = this.datepipe.transform((element.postedon), 'MMMM d, y');
-                this.passUserVisited = element.visited;
-               } else {
-                this.getIp  = false;
-               }
-            });
-            if(this.getIp==true) {
-              if(this.userDate == currentDateTime) {
-               console.log('Last Visited: ' + this.userDate);
-              } else {
-               // console.log('not same date');
-               this.getIdResult = this.passUserId;
-               this.getVisitedResult = this.passUserVisited; 
-               this.update();
-              }
-            } else {
-                 this.getIpResult = this.ipAddress;
-                 this.addVisitors();
-            }
-          },
-          error: error => {
-          }
-        })
        }
       },
      error: error => {
@@ -152,6 +118,50 @@ export class SidebarComponent implements OnInit {
    })
  }
 
+fetchVisitorsIP(): any {
+  let currentDateTime =this.datepipe.transform((new Date), 'MMMM d, y');
+     this.visitorService.find(this.ipAddress).subscribe({
+      next: data => {
+        this.getVisitor = data;
+        if (this.getVisitor.status === 'Failed') {
+          console.log(this.getVisitor.status)
+          this.getIpResult = this.ipAddress;
+          this.addVisitors();
+        }  else { 
+          this.getVisitorToken = this.getVisitor.access_token;
+          this.ValidateService.getToken(this.getVisitorToken).subscribe({
+          next: data => {
+            this.getvisitorAll = data;
+            this.getVisitorResult = this.getvisitorAll.data;
+            // console.log(this.getVisitorResult[0].user_ip)
+            if(this.getVisitorResult[0].user_ip == this.ipAddress){
+              this.passUserId = this.getVisitorResult[0].id;
+              this.userDate = this.datepipe.transform((this.getVisitorResult[0].postedon), 'MMMM d, y');
+              this.passUserVisited = this.getVisitorResult[0].visited;
+              if(this.userDate == currentDateTime) {
+                  console.log('Last Visited: ' + this.userDate);
+                } else {
+                  console.log('not same date');
+                  this.getIdResult = this.passUserId;
+                  this.getVisitedResult = this.passUserVisited; 
+                  this.update();
+                }
+            } else {
+              this.getIpResult = this.ipAddress;
+              this.addVisitors();
+            }
+          },
+          error: error => {
+          }
+        })
+        }
+        
+      },
+      error: error => {
+      }
+    })
+  }
+  
   fetchLikes(): any {
      this.likeService.getData().subscribe({
       next: data => {
